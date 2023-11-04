@@ -32,7 +32,7 @@ public class BoardComponent extends JComponent implements KeyListener{
 
 	public BoardComponent(Board board) {
 		this.board = board;
-		obstacleImage=new ImageIcon(getClass().getResource("/obstacle.png")).getImage();
+		obstacleImage = new ImageIcon(getClass().getResource("/resources/obstacle.png")).getImage(); // modified path
 		// Necessary for key listener
 		setFocusable(true);
 		addKeyListener(this);
@@ -77,7 +77,6 @@ public class BoardComponent extends JComponent implements KeyListener{
 					g.fillRect((int)Math.round(cell.getPosition().x* CELL_WIDTH), 
 							(int)Math.round(cell.getPosition().y * CELL_WIDTH),
 							(int)Math.round(CELL_WIDTH), (int)Math.round(CELL_WIDTH));
-					
 				}
 			
 				// }
@@ -120,8 +119,6 @@ public class BoardComponent extends JComponent implements KeyListener{
 				e.getKeyCode()!=KeyEvent.VK_UP && e.getKeyCode()!=KeyEvent.VK_DOWN ) 
 			return; // ignore
 		board.handleKeyPress(e.getKeyCode());
-		
-		
 	}
 
 	@Override
@@ -138,5 +135,4 @@ public class BoardComponent extends JComponent implements KeyListener{
 	public void keyTyped(KeyEvent arg0) {
 		// ignore
 	}
-	
 }
