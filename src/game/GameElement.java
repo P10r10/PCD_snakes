@@ -1,6 +1,5 @@
 package game;
 
-
-public abstract class GameElement{
+public abstract class GameElement {
 
 }

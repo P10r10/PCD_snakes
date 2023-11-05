@@ -13,30 +13,29 @@ import game.Goal;
 import game.Obstacle;
 import game.Snake;
 
-/** Remote representation of the game, no local threads involved.
- * Game state will be changed when updated info is received from Srver.
+/**
+ * Remote representation of the game, no local threads involved.
+ * Game state will be changed when updated info is received from Server.
  * Only for part II of the project.
- * @author luismota
  *
+ * @author luismota
  */
-public class RemoteBoard extends Board{
-	
-	@Override
-	public void handleKeyPress(int keyCode) {
-		//TODO
-	}
+public class RemoteBoard extends Board {
 
-	@Override
-	public void handleKeyRelease() {
-		// TODO
-	}
+    @Override
+    public void handleKeyPress(int keyCode) {
+        //TODO
+    }
 
-	@Override
-	public void init() {
-		// TODO 		
-	}
+    @Override
+    public void handleKeyRelease() {
+        // TODO
+    }
 
+    @Override
+    public void init() {
+        // TODO
+    }
 
-	
 
 }

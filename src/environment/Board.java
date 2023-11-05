@@ -29,7 +29,6 @@ public abstract class Board extends Observable {
 				cells[x][y] = new Cell(new BoardPosition(x, y));
 			}
 		}
-
 	}
 
 	public Cell getCell(BoardPosition cellCoord) {
@@ -75,10 +74,7 @@ public abstract class Board extends Observable {
 		if(pos.y<NUM_ROWS-1)
 			possibleCells.add(pos.getCellBelow());
 		return possibleCells;
-
 	}
-
-	
 
 	protected Goal addGoal() {
 		Goal goal=new Goal(this);
@@ -101,7 +97,6 @@ public abstract class Board extends Observable {
 		return snakes;
 	}
 
-
 	@Override
 	public void setChanged() {
 		super.setChanged();
@@ -111,20 +106,15 @@ public abstract class Board extends Observable {
 	public LinkedList<Obstacle> getObstacles() {
 		return obstacles;
 	}
-
 	
 	public abstract void init(); 
 	
 	public abstract void handleKeyPress(int keyCode);
 
 	public abstract void handleKeyRelease();
-	
-	
-	
 
 	public void addSnake(Snake snake) {
 		snakes.add(snake);
 	}
-
 
 }
