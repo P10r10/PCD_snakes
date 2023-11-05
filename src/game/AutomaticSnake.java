@@ -19,22 +19,30 @@ public class AutomaticSnake extends Snake {
     @Override
     public void run() {
         doInitialPositioning();
-        System.err.println("initial size:" + cells.size());
+        //System.err.println("initial size:" + cells.size());
         try {
             cells.getLast().request(this);
-            System.out.println("MOVE -> " + getName()); // DEBUG: to delete
-            move();// DEBUG: to delete
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         //TODO: automatic movement
-//        LinkedList<Cell> xxx = this.getCells();// DEBUG: to delete
-//        for (Cell x : xxx) {// DEBUG: to delete
-//            System.out.println(x.getPosition());// DEBUG: to delete
-//        }// DEBUG: to delete
-        //sleep(Board.PLAYER_PLAY_INTERVAL); // DEBUG: to delete
+//        move(cells.getLast());
+        try {
+            System.out.println("HERE");
+            sleep(2000); // DEBUG: to delete
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        BoardPosition dest = cells.getFirst().getPosition().getCellRight();
+        cells.getFirst().release();
+        cells.removeFirst();
+        Cell destCell = getBoard().getCell(dest);
+        cells.add(destCell);
+        try {
+            cells.getFirst().request(this);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-
 }

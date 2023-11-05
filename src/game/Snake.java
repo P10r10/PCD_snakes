@@ -44,12 +44,37 @@ public abstract class Snake extends Thread implements Serializable {
         return cells;
     }
 
-    public void move() throws InterruptedException {// DEBUG: to delete
-        move(new Cell(new BoardPosition(11, 11)));// DEBUG: to delete
-    }
     protected void move(Cell cell) throws InterruptedException {
-        cell.request(this);// DEBUG: to delete
+//        System.out.println("MOVE");
+//        sleep(2000);
+//        System.out.println("After sleep");
+//
+//        BoardPosition dest = cell.getPosition().getCellRight();
+//        Cell destCell = getBoard().getCell(dest);
+//        System.out.println("DEBUG: " + destCell.getPosition());
+//        cells.addFirst(destCell);
+//        System.out.println("D: b4" + cells.getFirst().getOcuppyingSnake());
+//
+//        cells.getFirst().request(this);
+//        System.out.println("D: after" + cells.getFirst().getOcuppyingSnake());
+//
+////        cells.getLast().release();
+////        cells.removeLast();
+//        System.out.println("2nd sleep");
+//        sleep(2000);
+//        System.out.println("After 2nd sleep");
     }
+
+
+    /*
+        sleep(1000); // DEBUG: to delete
+        BoardPosition dest = cells.getFirst().getPosition().getCellRight();
+        cells.getFirst().release();
+        cells.removeFirst();
+        Cell destCell = getBoard().getCell(dest);
+        cells.add(destCell);
+        cells.getFirst().request(this);
+     */
 
     public LinkedList<BoardPosition> getPath() {
         LinkedList<BoardPosition> coordinates = new LinkedList<BoardPosition>();
@@ -63,17 +88,20 @@ public abstract class Snake extends Thread implements Serializable {
         // Random position on the first column.
         // At startup, snake occupies a single cell
         int posX = 0;
-        int posY = (int) (Math.random() * Board.NUM_ROWS);
+//        int posY = (int) (Math.random() * Board.NUM_ROWS); // UNCOMMENT
+        int posY = 10; //REMOVE
         BoardPosition at = new BoardPosition(posX, posY);
 
         try {
+            // add snake reference to Cell
             board.getCell(at).request(this);
         } catch (InterruptedException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+        // add Cell to this Snake cells (LinkedList)
         cells.add(board.getCell(at));
-        System.err.println("Snake " + getIdentification() + " starting at:" + getCells().getLast().getPosition());
+        System.err.println("Snake " + getIdentification() + " starting at: " + getCells().getLast().getPosition());
     }
     public Board getBoard() {
         return board;

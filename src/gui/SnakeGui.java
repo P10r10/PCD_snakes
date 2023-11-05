@@ -40,11 +40,9 @@ public class SnakeGui implements Observer {
 
     private void buildGui() {
         frame.setLayout(new BorderLayout());
-
         boardGui = new BoardComponent(board);
         boardGui.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
         frame.add(boardGui, BorderLayout.CENTER);
-
         JButton resetObstaclesButton = new JButton("Reset snakes' directions");
         resetObstaclesButton.addActionListener(new ActionListener() {
 
@@ -56,8 +54,6 @@ public class SnakeGui implements Observer {
 
         });
         frame.add(resetObstaclesButton, BorderLayout.SOUTH);
-
-
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

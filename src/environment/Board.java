@@ -116,5 +116,4 @@ public abstract class Board extends Observable {
     public void addSnake(Snake snake) {
         snakes.add(snake);
     }
-
 }

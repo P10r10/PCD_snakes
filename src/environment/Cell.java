@@ -33,13 +33,14 @@ public class Cell {
         return position;
     }
 
-    public void request(Snake snake) throws InterruptedException {
+    // occupying snake = reference to occupying snake
+    public synchronized void request(Snake snake) throws InterruptedException {
         //TODO coordination and mutual exclusion
         ocuppyingSnake = snake;
     }
 
-    public void release() {
-        //TODO
+    public synchronized void release() {
+        ocuppyingSnake = null;
     }
 
     public boolean isOcupiedBySnake() {
