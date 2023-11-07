@@ -17,7 +17,6 @@ import environment.Cell;
  * @author luismota
  */
 public abstract class Snake extends Thread implements Serializable {
-    private static final int DELTA_SIZE = 10;
     protected LinkedList<Cell> cells = new LinkedList<Cell>();
     protected int size = 5;
     private int id;
@@ -61,17 +60,17 @@ public abstract class Snake extends Thread implements Serializable {
         // At startup, snake occupies a single cell
         int posX = 0;
         int posY = (int) (Math.random() * Board.NUM_ROWS);
-        BoardPosition at = new BoardPosition(posX, posY);
+        BoardPosition bp = new BoardPosition(posX, posY);
 
         try {
             // add snake reference to Cell
-            board.getCell(at).request(this);
+            board.getCell(bp).request(this);
         } catch (InterruptedException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
         // add Cell to this Snake cells (LinkedList)
-        cells.add(board.getCell(at));
+        cells.add(board.getCell(bp));
         System.err.println("Snake " + getIdentification() + " starting at: " + getCells().getLast().getPosition());
     }
     public Board getBoard() {
