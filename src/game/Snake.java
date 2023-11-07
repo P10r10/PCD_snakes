@@ -61,8 +61,7 @@ public abstract class Snake extends Thread implements Serializable {
         // At startup, snake occupies a single cell
         int posX = 0;
         int posY = (int) (Math.random() * Board.NUM_ROWS);
-//        BoardPosition at = new BoardPosition(posX, posY);
-        BoardPosition at = new BoardPosition(0, 10);
+        BoardPosition at = new BoardPosition(posX, posY);
 
         try {
             // add snake reference to Cell

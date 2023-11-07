@@ -2,6 +2,7 @@ package game;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.text.Position;
 
@@ -28,11 +29,24 @@ public class AutomaticSnake extends Snake {
         }
         //TODO: automatic movement
 
-        try {
-            getBoard().getCell(new BoardPosition(1, 10)).request(this);
-            cells.add(getBoard().getCell(new BoardPosition(1, 10)));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        while (cells.size() < 15) {
+            // neighbour positions to the head of Snake
+            List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(this.cells.getFirst());
+            // next position is random // MODIFY towards target after
+            Cell nextCell = null;
+            while (true) {
+                BoardPosition nextPos = neighbourPos.get(new Random().nextInt(neighbourPos.size()));
+                nextCell = getBoard().getCell(nextPos);
+                if (!nextCell.isOcupiedBySnake()) {
+                    break;
+                }
+            }
+            this.cells.addFirst(nextCell);
+            try {
+                nextCell.request(this);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
