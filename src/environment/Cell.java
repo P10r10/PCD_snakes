@@ -34,7 +34,7 @@ public class Cell {
     }
 
     // occupying snake = reference to occupying snake
-    public void request(Snake snake) throws InterruptedException {
+    public synchronized void request(Snake snake) throws InterruptedException {
         //TODO coordination and mutual exclusion
         ocuppyingSnake = snake;
     }

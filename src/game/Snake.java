@@ -18,7 +18,7 @@ import environment.Cell;
  */
 public abstract class Snake extends Thread implements Serializable {
     protected LinkedList<Cell> cells = new LinkedList<Cell>();
-    protected int size = 5;
+    protected int size = 5; // default 5
     private int id;
     private Board board;
 
@@ -43,8 +43,14 @@ public abstract class Snake extends Thread implements Serializable {
         return cells;
     }
 
+    // moves to Cell cell
     protected void move(Cell cell) throws InterruptedException {
-        //TODO
+        cells.addFirst(cell);
+        cell.request(this);
+        if (cells.size() == size) { // initial growth until size
+            cells.removeLast().release();
+        }
+        board.setChanged();
     }
 
     public LinkedList<BoardPosition> getPath() {

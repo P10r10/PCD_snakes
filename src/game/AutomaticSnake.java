@@ -20,7 +20,7 @@ public class AutomaticSnake extends Snake {
     @Override
     public void run() {
         doInitialPositioning();
-        System.err.println("initial size:" + cells.size());
+        System.err.println("initial size: " + cells.size());
         try {
             cells.getLast().request(this);
         } catch (InterruptedException e) {
@@ -29,81 +29,20 @@ public class AutomaticSnake extends Snake {
         }
         //TODO: automatic movement
 
-        while (cells.size() < this.size) { // grow until size is met
-            // neighbour positions around the head of Snake
-            List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(this.cells.getFirst());
-            Cell nextCell;
-            do { // next position is random // MODIFY towards target after
-                BoardPosition nextPos = neighbourPos.get(new Random().nextInt(neighbourPos.size()));
-                nextCell = getBoard().getCell(nextPos);
-            } while (nextCell.isOcupiedBySnake());
-            this.cells.addFirst(nextCell);
+        while (true) {
             try {
-                nextCell.request(this);
+                Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
+                List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(this.cells.getFirst());
+                Cell nextCell;
+                do { // next position is random // MODIFY towards target after
+                    BoardPosition nextPos = neighbourPos.get(new Random().nextInt(neighbourPos.size()));
+                    nextCell = getBoard().getCell(nextPos);
+                } while (nextCell.isOcupiedBySnake());
+                move(nextCell);
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-/*
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(cells.getFirst().getPosition());
-        List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(this.cells.getFirst());
-        Cell nextCell;
-        do { // next position is random // MODIFY towards target after
-            BoardPosition nextPos = neighbourPos.get(new Random().nextInt(neighbourPos.size()));
-            nextCell = getBoard().getCell(nextPos);
-        } while (nextCell.isOcupiedBySnake());
-        this.cells.addFirst(nextCell);
-        this.cells.removeLast().release(); // removes and releases last cell
-        try {
-            nextCell.request(this);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(cells.getFirst().getPosition());
-        neighbourPos = getBoard().getNeighboringPositions(this.cells.getFirst());
-        do { // next position is random // MODIFY towards target after
-            BoardPosition nextPos = neighbourPos.get(new Random().nextInt(neighbourPos.size()));
-            nextCell = getBoard().getCell(nextPos);
-        } while (nextCell.isOcupiedBySnake());
-        this.cells.addFirst(nextCell);
-        this.cells.removeLast().release(); // removes and releases last cell
-        try {
-            nextCell.request(this);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(cells.getFirst().getPosition());
-        neighbourPos = getBoard().getNeighboringPositions(this.cells.getFirst());
-        do { // next position is random // MODIFY towards target after
-            BoardPosition nextPos = neighbourPos.get(new Random().nextInt(neighbourPos.size()));
-            nextCell = getBoard().getCell(nextPos);
-        } while (nextCell.isOcupiedBySnake());
-        this.cells.addFirst(nextCell);
-        this.cells.removeLast().release(); // removes and releases last cell
-        try {
-            nextCell.request(this);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-*/
     }
-
 }
