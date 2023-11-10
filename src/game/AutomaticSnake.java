@@ -43,36 +43,22 @@ public class AutomaticSnake extends Snake {
         }
         //TODO: automatic movement
 
-//        while (true) {
-//            try {
-//                Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
-//                List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(this.cells.getFirst());
-//                Cell nextCell;
-//                do { // next position is random // MODIFY towards target after
-//                    BoardPosition nextPos = neighbourPos.get(new Random().nextInt(neighbourPos.size()));
-//                    nextCell = getBoard().getCell(nextPos);
-//                } while (nextCell.isOcupiedBySnake());
-//                move(nextCell);
-//
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-
         while (true) {
             try {
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                 Cell nextCell;
                 do { // moves towards target
                     nextCell = pickCandidateCell();
-                } while (nextCell.isOcupiedBySnake());
-                move(nextCell);
+                } while (nextCell != null && nextCell.isOcupiedBySnake());
+                if (nextCell == null) {
+                    System.out.println("Goal!");
+                    break; //TODO relocate goal and increase value
+                } else {
+                    move(nextCell);
+                }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-
-
-
     }
 }
