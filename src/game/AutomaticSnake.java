@@ -2,8 +2,6 @@ package game;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-
 import javax.swing.text.Position;
 
 import environment.LocalBoard;
@@ -19,18 +17,26 @@ public class AutomaticSnake extends Snake {
 
     private Cell pickCandidateCell() {
         // distance between snake's head and goal
-        Double distToGoal = cells.getFirst().getPosition().distanceTo(getBoard().getGoalPosition());
+        double distToGoal = cells.getFirst().getPosition().distanceTo(getBoard().getGoalPosition());
         Cell toReturn = null;
         List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(cells.getFirst());
         for (BoardPosition bp : neighbourPos) { // choose shortest distance to goal
-            Double candidate = bp.distanceTo(getBoard().getGoalPosition());
-            if (candidate < distToGoal) {
+            if (toReturn == null) { // always chooses at least one
+                if (!getBoard().getCell(bp).isOcupiedBySnake()) {
+                    toReturn = getBoard().getCell(bp);
+                    continue;
+                }
+            }
+            double candidate = bp.distanceTo(getBoard().getGoalPosition());
+            Cell candidateCell = getBoard().getCell(bp);
+            if (candidate < distToGoal && !candidateCell.isOcupiedBySnake()) {
                 distToGoal = candidate;
                 toReturn = getBoard().getCell(bp);
             }
         }
-        return toReturn;
+        return toReturn; // returns null if movement is impossible
     }
+
     @Override
     public void run() {
         doInitialPositioning();
@@ -42,22 +48,21 @@ public class AutomaticSnake extends Snake {
             e.printStackTrace();
         }
         //TODO: automatic movement
-
         while (true) {
             try { //DEBUG: review case when snake starts at goal
-                Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
-                Cell nextCell;
-                do { // moves towards target
-                    nextCell = pickCandidateCell();
-                } while (!nextCell.isOcupiedByGoal() && nextCell.isOcupiedBySnake());
-                move(nextCell);
-                if (nextCell.isOcupiedByGoal()) {
-                    System.out.println("GOAL!");
-                    nextCell.removeGoal();
 
-                    //relocate goal and increase value
-                    getBoard().getGoal().captureGoal();
-//                    break;
+                while (true) {
+                    Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
+                    Cell nextCell = pickCandidateCell();
+                    if (nextCell == null) {
+                        System.out.println("IMPOSSIBLE");
+                        // HERE review
+                    }
+                    move(nextCell);
+                    if (nextCell.isOcupiedByGoal()) {
+                        nextCell.removeGoal();
+                        size += getBoard().getGoal().captureGoal();
+                    }
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

@@ -25,6 +25,6 @@ public class Goal extends GameElement {
     public int captureGoal() {
         incrementValue();
         board.addGameElement(this);
-        return -1;
+        return value;
     }
 }

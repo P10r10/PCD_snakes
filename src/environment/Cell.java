@@ -60,9 +60,8 @@ public class Cell {
         return ocuppyingSnake;
     }
 
-    public Goal removeGoal() {
-        //TODO
-        return null;
+    public void removeGoal() {
+        gameElement = null;
     }
 
     public void removeObstacle() {
