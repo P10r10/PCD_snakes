@@ -37,5 +37,9 @@ public class RemoteBoard extends Board {
         // TODO
     }
 
+    @Override
+    public void stopSnakes() {
+        // TODO
+    }
 
 }

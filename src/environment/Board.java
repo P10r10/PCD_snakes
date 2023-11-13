@@ -115,6 +115,8 @@ public abstract class Board extends Observable {
 
     public abstract void init();
 
+    public abstract void stopSnakes();
+
     public abstract void handleKeyPress(int keyCode);
 
     public abstract void handleKeyRelease();

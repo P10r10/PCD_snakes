@@ -44,6 +44,13 @@ public class LocalBoard extends Board {
         setChanged();
     }
 
+    public void stopSnakes() {
+        for (Snake s : snakes) {
+            s.interrupt();
+        }
+        setChanged();
+    }
+
     @Override
     public void handleKeyPress(int keyCode) {
         // do nothing... No keys relevant in local game

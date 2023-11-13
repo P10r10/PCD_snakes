@@ -48,18 +48,21 @@ public class AutomaticSnake extends Snake {
             e.printStackTrace();
         }
         //TODO: automatic movement
-        while (true) {
-            try { //DEBUG: review case when snake starts at goal
-
-                while (true) {
+            try { //DEBUG: review case when snake starts over goal
+                while (!interrupted()) {
                     Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                     Cell nextCell = pickCandidateCell();
-                    if (nextCell == null) {
-                        System.out.println("IMPOSSIBLE");
-                        // HERE review
+                    if (nextCell == null) { // no more legal movements are possible
+                        interrupt();
+                        System.out.println(this.getName() + " interrupted!");
+                        break;
                     }
                     move(nextCell);
                     if (nextCell.isOcupiedByGoal()) {
+                        if (getBoard().getGoal().getValue() == 9) { // game over!
+                            getBoard().stopSnakes();
+                            break;
+                        }
                         nextCell.removeGoal();
                         size += getBoard().getGoal().captureGoal();
                     }
@@ -67,6 +70,5 @@ public class AutomaticSnake extends Snake {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }
     }
 }
