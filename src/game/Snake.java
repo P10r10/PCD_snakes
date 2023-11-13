@@ -47,7 +47,7 @@ public abstract class Snake extends Thread implements Serializable {
     protected void move(Cell cell) throws InterruptedException {
         cells.addFirst(cell);
         cell.request(this);
-        if (cells.size() == size) { // initial growth until size
+        if (cells.size() == size) { // stops growth when size is met
             cells.removeLast().release();
         }
         board.setChanged();

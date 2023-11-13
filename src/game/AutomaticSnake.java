@@ -52,6 +52,9 @@ public class AutomaticSnake extends Snake {
                 while (!interrupted()) {
                     Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                     Cell nextCell = pickCandidateCell();
+                    if (nextCell.getGameElement() instanceof Obstacle ) {
+                        wait(); // HERE review and DRAW SCHEMATICS
+                    }
                     if (nextCell == null) { // no more legal movements are possible
                         interrupt();
                         System.out.println(this.getName() + " interrupted!");
@@ -61,6 +64,7 @@ public class AutomaticSnake extends Snake {
                     if (nextCell.isOcupiedByGoal()) {
                         if (getBoard().getGoal().getValue() == 9) { // game over!
                             getBoard().stopSnakes();
+                            System.out.println("Game over!");
                             break;
                         }
                         nextCell.removeGoal();
