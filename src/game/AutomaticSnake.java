@@ -22,10 +22,10 @@ public class AutomaticSnake extends Snake {
         List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(cells.getFirst());
         for (BoardPosition bp : neighbourPos) { // choose shortest distance to goal
             if (toReturn == null) { // always chooses at least one
-                if (!getBoard().getCell(bp).isOcupiedBySnake()) {
+//                if (!getBoard().getCell(bp).isOcupiedBySnake()) {
                     toReturn = getBoard().getCell(bp);
-                    continue;
-                }
+//                    continue;
+//                }
             }
             double candidate = bp.distanceTo(getBoard().getGoalPosition());
             Cell candidateCell = getBoard().getCell(bp);
@@ -41,23 +41,18 @@ public class AutomaticSnake extends Snake {
     public void run() {
         doInitialPositioning();
         System.err.println("initial size: " + cells.size());
-        try {
-            cells.getLast().request(this);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         //TODO: automatic movement
             try { //DEBUG: review case when snake starts over goal
                 while (!interrupted()) {
-                    Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
+//                    Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
+                    Thread.sleep(200);
                     Cell nextCell = pickCandidateCell();
-                    if (nextCell.getGameElement() instanceof Obstacle ) {
-                        wait(); // HERE review and DRAW SCHEMATICS
-                    }
+//                    if (nextCell.getGameElement() instanceof Obstacle ) {
+//                        wait(); // HERE review and DRAW SCHEMATICS
+//                    }
                     if (nextCell == null) { // no more legal movements are possible
                         interrupt();
-                        System.out.println(this.getName() + " interrupted!");
+                        System.out.println(this.getName() + " interrupted, no more moves :(");
                         break;
                     }
                     move(nextCell);

@@ -33,14 +33,28 @@ public class Cell {
         return position;
     }
 
+    // HERE consider locks with conditional variables
     // occupying snake = reference to occupying snake
     public synchronized void request(Snake snake) throws InterruptedException {
         //TODO coordination and mutual exclusion
+        while (ocuppyingSnake != null || gameElement != null) { // cell is occupied
+            if (gameElement instanceof Goal) { // goals won't block snake
+                break;
+            }
+            System.out.println(snake.getName() + " waiting ...");
+            System.out.println("elem: " + snake.getCells().getFirst().getGameElement()); // remove
+            wait();
+        }
         ocuppyingSnake = snake;
+        notifyAll();
     }
 
-    public void release() {
-        ocuppyingSnake = null; // review
+    public synchronized void release() throws InterruptedException {
+        while (ocuppyingSnake == null) { // add obstacle after
+            wait();
+        }
+        ocuppyingSnake = null;
+        notifyAll();
     }
 
     public boolean isOcupiedBySnake() {
