@@ -33,9 +33,8 @@ public class Cell {
         return position;
     }
 
-    // HERE consider locks with conditional variables
     // occupying snake = reference to occupying snake
-    public synchronized void request(Snake snake) throws InterruptedException {
+    public synchronized void request(Snake snake) throws InterruptedException { // consider locks?
         //TODO coordination and mutual exclusion
         while (ocuppyingSnake != null || gameElement != null) { // cell is occupied
             if (gameElement instanceof Goal) { // when snake reaches goal, she captures

@@ -44,7 +44,7 @@ public class LocalBoard extends Board {
         setChanged();
     }
 
-    public void stopSnakes() {
+    public void stopSnakes() { // stop other threads?
         for (Snake s : snakes) {
             s.interrupt();
         }

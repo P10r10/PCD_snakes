@@ -56,19 +56,9 @@ public class AutomaticSnake extends Snake {
                         break;
                     }
                     move(nextCell);
-//                    if (nextCell.isOcupiedByGoal()) {
-//                        if (getBoard().getGoal().getValue() == 9) { // game over!
-//                            getBoard().stopSnakes();
-//                            System.out.println("Game over!");
-//                            interrupt();
-//                            break;
-//                        }
-//                        nextCell.removeGoal();
-//                        size += getBoard().getGoal().captureGoal();
-//                    }
                 }
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                System.out.println(getName() +  " interrupted");
             }
     }
 }
