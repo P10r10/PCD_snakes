@@ -24,7 +24,12 @@ public class Goal extends GameElement {
 
     public int captureGoal() {
         incrementValue();
-        board.addGameElement(this);
+        if (value < MAX_VALUE) {
+            board.addGameElement(this);
+        } else {
+            System.out.println("Game over!");
+            board.stopSnakes();
+        }
         return value;
     }
 }

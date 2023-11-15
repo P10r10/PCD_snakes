@@ -38,11 +38,12 @@ public class Cell {
     public synchronized void request(Snake snake) throws InterruptedException {
         //TODO coordination and mutual exclusion
         while (ocuppyingSnake != null || gameElement != null) { // cell is occupied
-            if (gameElement instanceof Goal) { // goals won't block snake
-                break;
+            if (gameElement instanceof Goal) { // when snake reaches goal, she captures
+                snake.addSize(getGoal().captureGoal());
+                removeGoal();
+                break; // goals won't block snake
             }
             System.out.println(snake.getName() + " waiting ...");
-            System.out.println("elem: " + snake.getCells().getFirst().getGameElement()); // remove
             wait();
         }
         ocuppyingSnake = snake;

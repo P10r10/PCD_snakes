@@ -31,6 +31,10 @@ public abstract class Snake extends Thread implements Serializable {
         return size;
     }
 
+    public void addSize(int amount) {
+        this.size += amount;
+    }
+
     public int getIdentification() {
         return id;
     }
@@ -47,7 +51,7 @@ public abstract class Snake extends Thread implements Serializable {
     protected void move(Cell cell) throws InterruptedException {
         cells.addFirst(cell);
         cell.request(this);
-        if (cells.size() == size) { // stops growth when size is met
+        if (cells.size() == size) { // stops snake growth when size is met
             cells.removeLast().release();
         }
         board.setChanged();
