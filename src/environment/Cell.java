@@ -33,9 +33,7 @@ public class Cell {
         return position;
     }
 
-    // occupying snake = reference to occupying snake
     public synchronized void request(Snake snake) throws InterruptedException { // consider locks?
-        //TODO coordination and mutual exclusion
         while (ocuppyingSnake != null || gameElement != null) { // cell is occupied
             if (gameElement instanceof Goal) { // when snake reaches goal, she captures
                 snake.addSize(getGoal().captureGoal());
@@ -61,8 +59,7 @@ public class Cell {
         return ocuppyingSnake != null;
     }
 
-    public void setGameElement(GameElement element) {
-        // TODO coordination and mutual exclusion
+    public synchronized void setGameElement(GameElement element) {
         gameElement = element;
     }
 

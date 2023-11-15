@@ -15,7 +15,7 @@ public class AutomaticSnake extends Snake {
         super(id, board);
     }
 
-    private Cell pickCandidateCell() {
+    private Cell pickCandidateCell() { // review movement to solve deadlocks
         // distance between snake's head and goal
         double distToGoal = cells.getFirst().getPosition().distanceTo(getBoard().getGoalPosition());
         Cell toReturn = null;
@@ -45,7 +45,11 @@ public class AutomaticSnake extends Snake {
             while (!interrupted()) {
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
                 Cell nextCell = pickCandidateCell();
-                move(nextCell);
+                if (nextCell == null) {
+                    break; // impossible to move
+                } else {
+                    move(nextCell);
+                }
             }
         } catch (InterruptedException e) {
             System.out.println(getName() +  " interrupted");

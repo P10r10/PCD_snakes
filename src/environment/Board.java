@@ -77,9 +77,8 @@ public abstract class Board extends Observable {
         return possibleCells;
     }
 
-    protected Goal addGoal() {
+    protected void addGoal() {
         addGameElement(new Goal(this));
-        return goal;
     }
 
     public Goal getGoal() {

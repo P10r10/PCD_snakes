@@ -15,5 +15,12 @@ public class Main {
         game.init();
         // Launch server
         // TODO
+        /*
+         Problems to address:
+           -prevent deadlocks
+           -move snakes pressing button
+           -implement obstacles
+           - (..)
+         */
     }
 }
