@@ -18,7 +18,7 @@ import environment.Cell;
  */
 public abstract class Snake extends Thread implements Serializable {
     protected LinkedList<Cell> cells = new LinkedList<Cell>();
-    protected int size = 5; // default 5
+    protected int size = 5;
     private int id;
     private Board board;
 
@@ -47,8 +47,7 @@ public abstract class Snake extends Thread implements Serializable {
         return cells;
     }
 
-    // moves to Cell cell
-    protected void move(Cell cell) throws InterruptedException {
+    protected void move(Cell cell) throws InterruptedException { // moves to Cell cell
         cells.addFirst(cell);
         cell.request(this);
         if (cells.size() == size) { // stops snake growth when size is met
@@ -65,22 +64,18 @@ public abstract class Snake extends Thread implements Serializable {
         return coordinates;
     }
 
-    protected void doInitialPositioning() {
-        // Random position on the first column.
-        // At startup, snake occupies a single cell
+    protected void doInitialPositioning() {  // At startup, snake occupies a single cell
         int posX = 0;
-        int posY = (int) (Math.random() * Board.NUM_ROWS);
+        int posY = (int) (Math.random() * Board.NUM_ROWS); // Random position on the first column.
         BoardPosition bp = new BoardPosition(posX, posY);
-
         try {
-            // add snake reference to Cell
-            board.getCell(bp).request(this);
+            board.getCell(bp).request(this); // add snake reference to Cell
         } catch (InterruptedException e1) {
             // TODO Auto-generated catch block
+            System.out.println("Exception in doInitialPositioning"); // REMOVE
             e1.printStackTrace();
         }
-        // add Cell to this Snake cells (LinkedList)
-        cells.add(board.getCell(bp));
+        cells.add(board.getCell(bp)); // add Cell to this Snake cells (LinkedList)
         System.err.println("Snake " + getIdentification() + " starting at: " + getCells().getLast().getPosition());
     }
     public Board getBoard() {

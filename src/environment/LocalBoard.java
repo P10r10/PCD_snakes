@@ -22,7 +22,7 @@ import game.AutomaticSnake;
  */
 public class LocalBoard extends Board {
 
-    private static final int NUM_SNAKES = 4; // default = 2
+    private static final int NUM_SNAKES = 10; // default = 2
     private static final int NUM_OBSTACLES = 0; // default = 25
     private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
@@ -33,7 +33,7 @@ public class LocalBoard extends Board {
             snakes.add(snake);
         }
         addObstacles(NUM_OBSTACLES);
-        Goal goal = addGoal();
+        addGoal();
         System.err.println("All elements placed");
     }
 

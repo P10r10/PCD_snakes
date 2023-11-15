@@ -21,16 +21,16 @@ public class AutomaticSnake extends Snake {
         Cell toReturn = null;
         List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(cells.getFirst());
         for (BoardPosition bp : neighbourPos) { // choose shortest distance to goal
+            Snake snakeAtPos = getBoard().getCell(bp).getOcuppyingSnake(); // snake at bp
             if (toReturn == null) { // always chooses at least one
-                if (!this.equals(getBoard().getCell(bp).getOcuppyingSnake())) { // not herself
+                if (!this.equals(snakeAtPos)) { // if not snake herself
                     toReturn = getBoard().getCell(bp);
                     continue;
                 }
             }
-            double candidate = bp.distanceTo(getBoard().getGoalPosition());
-            Cell candidateCell = getBoard().getCell(bp);
-            if (candidate < distToGoal && !candidateCell.isOcupiedBySnake()) {
-                distToGoal = candidate;
+            double candidateDist = bp.distanceTo(getBoard().getGoalPosition());
+            if (candidateDist < distToGoal && !this.equals(snakeAtPos)) { // if not snake herself
+                distToGoal = candidateDist;
                 toReturn = getBoard().getCell(bp);
             }
         }
@@ -41,24 +41,14 @@ public class AutomaticSnake extends Snake {
     public void run() {
         doInitialPositioning();
         System.err.println("initial size: " + cells.size());
-        //TODO: automatic movement
-            try { //DEBUG: review case when snake starts over goal
-                while (!interrupted()) {
-                    Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
-//                    Thread.sleep(400); // remove
-                    Cell nextCell = pickCandidateCell();
-//                    if (nextCell.getGameElement() instanceof Obstacle ) {
-//                        wait(); // HERE review and DRAW SCHEMATICS
-//                    }
-                    if (nextCell == null) { // no more legal movements are possible REMOVE THIS BLOCK ??
-                        interrupt();
-                        System.out.println(this.getName() + " interrupted, no more moves :(");
-                        break;
-                    }
-                    move(nextCell);
-                }
-            } catch (InterruptedException e) {
-                System.out.println(getName() +  " interrupted");
+        try { //DEBUG: review case when snake starts over goal
+            while (!interrupted()) {
+                Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
+                Cell nextCell = pickCandidateCell();
+                move(nextCell);
             }
+        } catch (InterruptedException e) {
+            System.out.println(getName() +  " interrupted");
+        }
     }
 }
