@@ -47,10 +47,7 @@ public class Cell {
         notifyAll();
     }
 
-    public synchronized void release() throws InterruptedException {
-        while (ocuppyingSnake == null) { // add obstacle after
-            wait();
-        }
+    public synchronized void release() {
         ocuppyingSnake = null;
         notifyAll();
     }

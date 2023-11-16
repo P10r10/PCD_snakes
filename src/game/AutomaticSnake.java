@@ -43,9 +43,10 @@ public class AutomaticSnake extends Snake {
         System.err.println("initial size: " + cells.size());
         try { //DEBUG: review case when snake starts over goal
             while (!interrupted()) {
-                Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
+                Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                 Cell nextCell = pickCandidateCell();
                 if (nextCell == null) {
+                    System.out.println("DEBUG: impossible to move " + getName()); // REMOVE
                     break; // impossible to move
                 } else {
                     move(nextCell);
