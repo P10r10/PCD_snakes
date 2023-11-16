@@ -71,8 +71,6 @@ public abstract class Snake extends Thread implements Serializable {
         try {
             board.getCell(bp).request(this); // add snake reference to Cell
         } catch (InterruptedException e1) {
-            // TODO Auto-generated catch block
-            System.out.println("Exception in doInitialPositioning"); // REMOVE
             e1.printStackTrace();
         }
         cells.add(board.getCell(bp)); // add Cell to this Snake cells (LinkedList)

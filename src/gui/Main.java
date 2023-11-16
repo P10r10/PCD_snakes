@@ -18,7 +18,7 @@ public class Main {
         /*
          Problems to address:
            -prevent deadlocks
-           -move snakes pressing button
+           -move snakes pressing button HERE
            -implement obstacles
            - (..)
          */

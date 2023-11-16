@@ -50,7 +50,11 @@ public class SnakeGui implements Observer {
             public void actionPerformed(ActionEvent e) {
                 // TODO
                 System.out.println("Implement Reset Snakes Directions"); // DEBUG: to delete
+//                board.stopSnakes();
+//                board.getSnakes().getFirst().start();
+//                board.init();  IMPLEMENT LOCK ON SHARED RESOURCES
             }
+
 
         });
         frame.add(resetObstaclesButton, BorderLayout.SOUTH);

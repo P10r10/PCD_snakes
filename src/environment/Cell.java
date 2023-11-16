@@ -1,14 +1,9 @@
 package environment;
 
-import java.io.Serializable;
-
-import javax.sound.midi.SysexMessage;
-
 import game.GameElement;
 import game.Goal;
 import game.Obstacle;
 import game.Snake;
-import game.AutomaticSnake;
 
 /**
  * Main class for game representation.
@@ -41,6 +36,7 @@ public class Cell {
                 break; // goals won't block snake
             }
             System.out.println(snake.getName() + " waiting ...");
+            System.out.println("DEBUG: " + getPosition()); // remove
             wait();
         }
         ocuppyingSnake = snake;
@@ -52,7 +48,7 @@ public class Cell {
         notifyAll();
     }
 
-    public boolean isOcupiedBySnake() {
+    public boolean isOccupiedBySnake() {
         return ocuppyingSnake != null;
     }
 
@@ -60,8 +56,8 @@ public class Cell {
         gameElement = element;
     }
 
-    public boolean isOcupied() {
-        return isOcupiedBySnake() || (gameElement != null && gameElement instanceof Obstacle);
+    public boolean isOccupied() {
+        return isOccupiedBySnake() || (gameElement != null && gameElement instanceof Obstacle);
     }
 
     public Snake getOcuppyingSnake() {
@@ -80,7 +76,7 @@ public class Cell {
         return (Goal) gameElement;
     }
 
-    public boolean isOcupiedByGoal() {
+    public boolean isOccupiedByGoal() {
         return (gameElement != null && gameElement instanceof Goal);
     }
 }

@@ -8,7 +8,6 @@ import game.Goal;
 import game.HumanSnake;
 import game.Obstacle;
 import game.Snake;
-import game.AutomaticSnake;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -69,7 +68,7 @@ public class BoardComponent extends JComponent implements KeyListener {
                         g.drawString(goal.getValue() + "", (int) Math.round((cell.getPosition().x + 0.15) * CELL_WIDTH),
                                 (int) Math.round((cell.getPosition().y + 0.9) * CELL_WIDTH));
                     }
-                if (cell.isOcupiedBySnake()) {
+                if (cell.isOccupiedBySnake()) {
                     // different color for human player...
                     if (cell.getOcuppyingSnake() instanceof HumanSnake)
                         g.setColor(Color.ORANGE);

@@ -1,6 +1,5 @@
 package environment;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,7 +51,7 @@ public abstract class Board extends Observable {
         boolean placed = false;
         while (!placed) {
             BoardPosition pos = getRandomPosition();
-            if (!getCell(pos).isOcupied() && !getCell(pos).isOcupiedByGoal()) {
+            if (!getCell(pos).isOccupied() && !getCell(pos).isOccupiedByGoal()) {
                 getCell(pos).setGameElement(gameElement);
                 if (gameElement instanceof Goal) {
                     setGoalPosition(pos);
