@@ -45,7 +45,7 @@ public class AutomaticSnake extends Snake {
             while (!interrupted()) {
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                 Cell nextCell = pickCandidateCell();
-                if (nextCell == null) {
+                if (nextCell == null) { // REMOVE THIS BLOCK?
                     System.out.println("DEBUG: impossible to move " + getName()); // REMOVE
                     break; // impossible to move
                 } else {
