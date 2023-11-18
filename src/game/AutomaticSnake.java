@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import javax.swing.text.Position;
 
 import environment.LocalBoard;
-import gui.SnakeGui;
 import environment.Cell;
 import environment.Board;
 import environment.BoardPosition;
@@ -21,10 +19,9 @@ public class AutomaticSnake extends Snake {
 
     private Cell pickCandidateCell() { // review movement to solve deadlocks
         // distance between snake's head and goal
-        double distToGoal = cells.getFirst().getPosition().distanceTo(getBoard().getGoalPosition());
         Cell toReturn = null;
         List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(cells.getFirst()); // head neighbours
-        List<Cell> candidateCells = new ArrayList<>();
+        List<Cell> candidateCells = new LinkedList<>();
 
         for (BoardPosition bp : neighbourPos) {
             Snake snakeAtPos = getBoard().getCell(bp).getOcuppyingSnake(); // snake at bp
@@ -36,9 +33,10 @@ public class AutomaticSnake extends Snake {
             toReturn = candidateCells.get(new Random().nextInt(candidateCells.size()));
             toReposition = false;
         } else { // regular snake movement towards goal
+            double distToGoal = cells.getFirst().getPosition().distanceTo(getBoard().getGoalPosition());
             for (Cell cell : candidateCells) {
                 double candidateDist = cell.getPosition().distanceTo(getBoard().getGoalPosition());
-                if (candidateDist < distToGoal) {
+                if (candidateDist < distToGoal || toReturn == null) { // if cell is still null, it gets picked anyway
                     distToGoal = candidateDist;
                     toReturn = cell;
                 }
