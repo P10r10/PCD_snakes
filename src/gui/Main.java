@@ -2,6 +2,7 @@ package gui;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.net.ssl.StandardConstants;
 
@@ -15,12 +16,10 @@ public class Main {
         game.init();
         // Launch server
         // TODO
-        /*
-         Problems to address:
-           -prevent deadlocks
-           -move snakes pressing button HERE
-           -implement obstacles
-           - (..)
-         */
+//         Problems to address:
+//           -implement obstacles HERE
+//            - Obstacle placed over snake position
+//           -prevent deadlocks
+//           - (..)
     }
 }

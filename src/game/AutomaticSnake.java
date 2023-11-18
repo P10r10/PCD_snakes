@@ -30,8 +30,10 @@ public class AutomaticSnake extends Snake {
             }
         }
         if (toReposition) { // if movement to unlock snake is required we chose a random valid cell
-            toReturn = candidateCells.get(new Random().nextInt(candidateCells.size()));
-            toReposition = false;
+            if (!candidateCells.isEmpty()) {
+                toReturn = candidateCells.get(new Random().nextInt(candidateCells.size()));
+                toReposition = false;
+            }
         } else { // regular snake movement towards goal
             double distToGoal = cells.getFirst().getPosition().distanceTo(getBoard().getGoalPosition());
             for (Cell cell : candidateCells) {
@@ -48,16 +50,18 @@ public class AutomaticSnake extends Snake {
     @Override
     public void run() {
         doInitialPositioning();
-        System.err.println("initial size: " + cells.size());
+//        System.err.println("initial size: " + cells.size());
         while (!interrupted()) {
             if (getBoard().isFinished()) {
                 break; // game over
             }
-            try { //DEBUG: review case when snake starts over goal
+            try { //DEBUG: review case when snake starts over goal // REMOVE?
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                 Cell nextCell = pickCandidateCell();
-                if (nextCell != null) { // if null, movement is impossible
+                if (nextCell != null) {
                     move(nextCell);
+                } else { // if null, movement is impossible
+                    break;
                 }
             } catch (InterruptedException e) {
                 toReposition = true;
