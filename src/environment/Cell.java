@@ -36,7 +36,6 @@ public class Cell {
                 break; // goals won't block snake
             }
             System.out.println(snake.getName() + " waiting ...");
-            System.out.println("DEBUG: " + getPosition()); // remove
             wait();
         }
         ocuppyingSnake = snake;

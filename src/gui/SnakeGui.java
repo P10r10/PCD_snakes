@@ -46,9 +46,7 @@ public class SnakeGui implements Observer {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO
-                System.out.println("Implement Reset Snakes Directions"); // DEBUG: to delete
-//                board.init();  IMPLEMENT LOCK ON SHARED RESOURCES
+                board.stopSnakes();
             }
 
 

@@ -41,8 +41,8 @@ public class AutomaticSnake extends Snake {
     public void run() {
         doInitialPositioning();
         System.err.println("initial size: " + cells.size());
-        try { //DEBUG: review case when snake starts over goal
-            while (!interrupted()) {
+        while (!interrupted()) {
+            try { //DEBUG: review case when snake starts over goal
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                 Cell nextCell = pickCandidateCell();
                 if (nextCell == null) { // REMOVE THIS BLOCK?
@@ -51,9 +51,9 @@ public class AutomaticSnake extends Snake {
                 } else {
                     move(nextCell);
                 }
+            } catch (InterruptedException e) {
+                // HERE resume snake movement
             }
-        } catch (InterruptedException e) {
-            System.out.println(getName() +  " interrupted");
         }
     }
 }
