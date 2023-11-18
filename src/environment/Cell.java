@@ -35,7 +35,6 @@ public class Cell {
                 removeGoal();
                 break; // goals won't block snake
             }
-            System.out.println(snake.getName() + " waiting ...");
             wait();
         }
         ocuppyingSnake = snake;

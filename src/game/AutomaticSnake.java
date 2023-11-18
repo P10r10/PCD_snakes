@@ -2,6 +2,7 @@ package game;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import javax.swing.text.Position;
 
 import environment.LocalBoard;
@@ -19,7 +20,7 @@ public class AutomaticSnake extends Snake {
         // distance between snake's head and goal
         double distToGoal = cells.getFirst().getPosition().distanceTo(getBoard().getGoalPosition());
         Cell toReturn = null;
-        List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(cells.getFirst());
+        List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(cells.getFirst()); // head neighbours
         for (BoardPosition bp : neighbourPos) { // choose shortest distance to goal
             Snake snakeAtPos = getBoard().getCell(bp).getOcuppyingSnake(); // snake at bp
             if (toReturn == null) { // always chooses at least one
@@ -45,14 +46,11 @@ public class AutomaticSnake extends Snake {
             try { //DEBUG: review case when snake starts over goal
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                 Cell nextCell = pickCandidateCell();
-                if (nextCell == null) { // REMOVE THIS BLOCK?
-                    System.out.println("DEBUG: impossible to move " + getName()); // REMOVE
-                    break; // impossible to move
-                } else {
+                if (nextCell != null) { // if null, movement is impossible
                     move(nextCell);
                 }
             } catch (InterruptedException e) {
-                // HERE resume snake movement
+                // HERE resume snake movement USAR DIFERENTE DO ÚLTIMO
             }
         }
     }

@@ -28,7 +28,6 @@ public class Goal extends GameElement {
             board.addGameElement(this);
         } else {
             System.out.println("Game over!");
-            board.stopSnakes();
         }
         return value;
     }

@@ -48,8 +48,6 @@ public class SnakeGui implements Observer {
             public void actionPerformed(ActionEvent e) {
                 board.stopSnakes();
             }
-
-
         });
         frame.add(resetObstaclesButton, BorderLayout.SOUTH);
         frame.pack();
