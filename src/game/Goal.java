@@ -27,7 +27,8 @@ public class Goal extends GameElement {
         if (value < MAX_VALUE) {
             board.addGameElement(this);
         } else {
-            System.out.println("Game over!");
+            System.out.println("Game over!"); // review
+            board.setFinished();
         }
         return value;
     }
