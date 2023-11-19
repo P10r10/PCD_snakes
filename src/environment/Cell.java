@@ -15,7 +15,7 @@ public class Cell {
     private Snake ocuppyingSnake = null;
     private GameElement gameElement = null;
 
-    public GameElement getGameElement() {
+    public synchronized GameElement getGameElement() {
         return gameElement;
     }
 

@@ -19,7 +19,7 @@ public class ObstacleMover extends Thread {
 		// TODO
 		while (obstacle.getRemainingMoves() > 0) {
 			try {
-				Thread.sleep(400);
+				Thread.sleep(Obstacle.OBSTACLE_MOVE_INTERVAL);
 				//HERE ConcurrentModificationException
 				Cell cell = board.getObstacleCell(obstacle);
                 cell.removeObstacle();

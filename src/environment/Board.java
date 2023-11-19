@@ -55,7 +55,7 @@ public abstract class Board extends Observable {
         this.goalPosition = goalPosition;
     }
 
-    public void addGameElement(GameElement gameElement) { // synchronize?
+    public synchronized void addGameElement(GameElement gameElement) {
         boolean placed = false;
         while (!placed) {
             BoardPosition pos = getRandomPosition();
@@ -120,19 +120,15 @@ public abstract class Board extends Observable {
         return obstacles;
     }
 
-    private LinkedList<Cell> getCellsWithObstacles() {
-        return cellsWithObstacles;
-    }
-
     public synchronized Cell getObstacleCell(Obstacle obstacle) { // returns and removes Cell
         Cell toReturn = null;
-        for (Cell cell : getCellsWithObstacles()) {
+        for (Cell cell : cellsWithObstacles) {
             if (cell.getGameElement().equals(obstacle)) {
                 toReturn = cell;
                 break;
             }
         }
-        getCellsWithObstacles().remove(toReturn);
+        cellsWithObstacles.remove(toReturn);
         return toReturn;
     }
 
