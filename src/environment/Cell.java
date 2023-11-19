@@ -63,11 +63,17 @@ public class Cell {
     }
 
     public void removeGoal() {
-        gameElement = null;
+        if (gameElement instanceof Goal) {
+            gameElement = null;
+        }
     }
 
-    public void removeObstacle() {
+    public synchronized void removeObstacle() {
         //TODO
+        if (gameElement instanceof Obstacle) {
+            gameElement = null;
+            notifyAll();
+        }
     }
 
     public Goal getGoal() {

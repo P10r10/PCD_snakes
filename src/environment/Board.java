@@ -20,6 +20,8 @@ public abstract class Board extends Observable {
     public static final int NUM_ROWS = 30;
     protected LinkedList<Snake> snakes = new LinkedList<Snake>();
     private final LinkedList<Obstacle> obstacles = new LinkedList<Obstacle>();
+
+    private final LinkedList<Cell> cellsWithObstacles = new LinkedList<>();
     protected boolean isFinished = false;
 
 
@@ -60,7 +62,12 @@ public abstract class Board extends Observable {
         while (!placed) {
             BoardPosition pos = getRandomPosition();
             if (!getCell(pos).isOccupied() && !getCell(pos).isOccupiedByGoal()) {
-                getCell(pos).setGameElement(gameElement);
+                if (gameElement instanceof Obstacle) {
+                    Cell cell = getCell(pos);
+                    cell.setGameElement(gameElement);
+                    cellsWithObstacles.add(cell);
+//                    getCell(pos).setGameElement(gameElement);
+                }
                 if (gameElement instanceof Goal) {
                     setGoalPosition(pos);
                     System.out.println("Goal placed at: " + pos);
@@ -88,13 +95,12 @@ public abstract class Board extends Observable {
         addGameElement(new Goal(this));
     }
 
-    public Goal getGoal() {
+    public Goal getGoal() { // remove?
         return goal;
     }
 
     protected void addObstacles(int numberObstacles) {
-        // clear obstacle list , necessary when resetting obstacles.
-        getObstacles().clear();
+        getObstacles().clear(); // necessary when resetting obstacles
         while (numberObstacles > 0) {
             Obstacle obs = new Obstacle(this);
             addGameElement(obs);
@@ -115,6 +121,19 @@ public abstract class Board extends Observable {
 
     public LinkedList<Obstacle> getObstacles() {
         return obstacles;
+    }
+
+    private LinkedList<Cell> getCellsWithObstacles() {
+        return cellsWithObstacles;
+    }
+
+    public Cell getObstacleCell(Obstacle obstacle) {
+        for (Cell cell : getCellsWithObstacles()) {
+            if (obstacle.equals(cell.getGameElement())) {
+                return cell;
+            }
+        }
+        return null;
     }
 
     public abstract void init();

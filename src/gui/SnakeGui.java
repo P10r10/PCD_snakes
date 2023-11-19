@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 
 import environment.Board;
 import environment.LocalBoard;
+import game.Obstacle;
 
 /**
  * Class to create and configure GUI.
@@ -47,6 +48,13 @@ public class SnakeGui implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 board.stopSnakes();
+
+                Obstacle ob = board.getObstacles().getFirst();
+
+                board.addGameElement(ob);
+                board.getObstacleCell(ob).removeObstacle();
+                board.setChanged();
+//                System.out.println(board.getObstacles().getFirst());
             }
         });
         frame.add(resetObstaclesButton, BorderLayout.SOUTH);

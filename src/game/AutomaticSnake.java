@@ -1,10 +1,8 @@
 package game;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
 import environment.LocalBoard;
 import environment.Cell;
 import environment.Board;
@@ -18,7 +16,6 @@ public class AutomaticSnake extends Snake {
     private boolean toReposition = false;
 
     private Cell pickCandidateCell() { // review movement to solve deadlocks
-        // distance between snake's head and goal
         Cell toReturn = null;
         List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(cells.getFirst()); // head neighbours
         List<Cell> candidateCells = new LinkedList<>();
@@ -35,6 +32,7 @@ public class AutomaticSnake extends Snake {
                 toReposition = false;
             }
         } else { // regular snake movement towards goal
+            // distance between snake's head and goal
             double distToGoal = cells.getFirst().getPosition().distanceTo(getBoard().getGoalPosition());
             for (Cell cell : candidateCells) {
                 double candidateDist = cell.getPosition().distanceTo(getBoard().getGoalPosition());
