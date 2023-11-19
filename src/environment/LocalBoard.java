@@ -8,12 +8,7 @@ import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import game.GameElement;
-import game.Goal;
-import game.Obstacle;
-import game.Server;
-import game.Snake;
-import game.AutomaticSnake;
+import game.*;
 
 /**
  * Class representing the state of a game running locally
@@ -23,8 +18,10 @@ import game.AutomaticSnake;
 public class LocalBoard extends Board {
 
     private static final int NUM_SNAKES = 0; // default = 2
-    private static final int NUM_OBSTACLES = 1; // default = 25
+    private static final int NUM_OBSTACLES = 3; // default = 25
     private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
+
+    private final LinkedList<ObstacleMover> obstacleMovers = new LinkedList<>();
 
     public LocalBoard() {
 
@@ -38,10 +35,15 @@ public class LocalBoard extends Board {
     }
 
     public void init() {
-        for (Snake s : snakes)
-            s.start();
         // TODO: launch other threads
-        setChanged();
+        for (Snake s : snakes) // start all snakes threads
+            s.start();
+        for (Obstacle obstacle : getObstacles()) { // create obstacle movers
+            obstacleMovers.add(new ObstacleMover(obstacle, this));
+        }
+        for (ObstacleMover om : obstacleMovers) {
+            om.start();
+        }
     }
 
     public void stopSnakes() { // stop other threads?

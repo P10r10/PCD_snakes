@@ -19,15 +19,15 @@ import environment.Cell;
 public abstract class Snake extends Thread implements Serializable {
     protected LinkedList<Cell> cells = new LinkedList<Cell>();
     protected int size = 5;
-    private int id;
-    private Board board;
+    private final int id;
+    private final Board board;
 
     public Snake(int id, Board board) {
         this.id = id;
         this.board = board;
     }
 
-    public int getSize() {
+    public int getSize() { // REMOVE?
         return size;
     }
 
@@ -76,6 +76,7 @@ public abstract class Snake extends Thread implements Serializable {
         cells.add(board.getCell(bp)); // add Cell to this Snake cells (LinkedList)
         System.err.println("Snake " + getIdentification() + " starting at: " + getCells().getLast().getPosition());
     }
+
     public Board getBoard() {
         return board;
     }

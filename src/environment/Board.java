@@ -5,10 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
-import game.GameElement;
-import game.Goal;
-import game.Obstacle;
-import game.Snake;
+import game.*;
 
 public abstract class Board extends Observable {
     protected Cell[][] cells;
@@ -22,6 +19,7 @@ public abstract class Board extends Observable {
     private final LinkedList<Obstacle> obstacles = new LinkedList<Obstacle>();
 
     private final LinkedList<Cell> cellsWithObstacles = new LinkedList<>();
+
     protected boolean isFinished = false;
 
 
@@ -57,16 +55,15 @@ public abstract class Board extends Observable {
         this.goalPosition = goalPosition;
     }
 
-    public void addGameElement(GameElement gameElement) {
+    public void addGameElement(GameElement gameElement) { // synchronize?
         boolean placed = false;
         while (!placed) {
             BoardPosition pos = getRandomPosition();
             if (!getCell(pos).isOccupied() && !getCell(pos).isOccupiedByGoal()) {
+                getCell(pos).setGameElement(gameElement);
                 if (gameElement instanceof Obstacle) {
                     Cell cell = getCell(pos);
-                    cell.setGameElement(gameElement);
                     cellsWithObstacles.add(cell);
-//                    getCell(pos).setGameElement(gameElement);
                 }
                 if (gameElement instanceof Goal) {
                     setGoalPosition(pos);
@@ -127,13 +124,16 @@ public abstract class Board extends Observable {
         return cellsWithObstacles;
     }
 
-    public Cell getObstacleCell(Obstacle obstacle) {
+    public synchronized Cell getObstacleCell(Obstacle obstacle) { // returns and removes Cell
+        Cell toReturn = null;
         for (Cell cell : getCellsWithObstacles()) {
-            if (obstacle.equals(cell.getGameElement())) {
-                return cell;
+            if (cell.getGameElement().equals(obstacle)) {
+                toReturn = cell;
+                break;
             }
         }
-        return null;
+        getCellsWithObstacles().remove(toReturn);
+        return toReturn;
     }
 
     public abstract void init();

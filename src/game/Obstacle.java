@@ -19,4 +19,8 @@ public class Obstacle extends GameElement {
 		return remainingMoves;
 	}
 
+	public void decreaseMoves() {
+		remainingMoves--;
+	}
+
 }
