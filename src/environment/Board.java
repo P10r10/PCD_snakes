@@ -55,7 +55,7 @@ public abstract class Board extends Observable {
         this.goalPosition = goalPosition;
     }
 
-    public synchronized void addGameElement(GameElement gameElement) {
+    public synchronized void addGameElement(GameElement gameElement) { // synchronize?
         boolean placed = false;
         while (!placed) {
             BoardPosition pos = getRandomPosition();

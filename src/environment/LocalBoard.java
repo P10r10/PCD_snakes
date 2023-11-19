@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import game.*;
 
@@ -17,7 +18,7 @@ import game.*;
  */
 public class LocalBoard extends Board {
 
-    private static final int NUM_SNAKES = 0; // default = 2
+    private static final int NUM_SNAKES = 4; // default = 2
     private static final int NUM_OBSTACLES = 25; // default = 25
     private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
@@ -35,18 +36,18 @@ public class LocalBoard extends Board {
     }
 
     public void init() {
-        // TODO: launch other threads
+        ExecutorService threadPool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
         for (Snake s : snakes) // start all snakes threads
             s.start();
         for (Obstacle obstacle : getObstacles()) { // create obstacle movers
             obstacleMovers.add(new ObstacleMover(obstacle, this));
         }
         for (ObstacleMover om : obstacleMovers) {
-            om.start();
+            threadPool.submit(om); // only 3 threads running at the same time
         }
     }
 
-    public void stopSnakes() { // stop other threads?
+    public void stopSnakes() {
         for (Snake s : snakes) {
             s.interrupt();
         }

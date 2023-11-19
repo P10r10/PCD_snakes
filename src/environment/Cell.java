@@ -69,10 +69,9 @@ public class Cell {
     }
 
     public synchronized void removeObstacle() {
-        //TODO REVER
         if (gameElement instanceof Obstacle) {
             gameElement = null;
-//            notifyAll();
+            notifyAll();
         }
     }
 
