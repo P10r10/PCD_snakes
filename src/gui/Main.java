@@ -14,12 +14,8 @@ public class Main {
         LocalBoard board = new LocalBoard();
         SnakeGui game = new SnakeGui(board, 600, 0);
         game.init();
-        // Launch server
-        // TODO
-//         Problems to address:
-//           -implement obstacles HERE
-//            - Obstacle placed over snake position
-//           -prevent deadlocks
-//           - (..)
+        // TODO Launch server
+        // Problems to address:
+        // -prevent deadlocks
     }
 }

@@ -53,7 +53,7 @@ public class AutomaticSnake extends Snake {
             if (getBoard().isFinished()) {
                 break; // game over
             }
-            try { //DEBUG: review case when snake starts over goal // REMOVE?
+            try {
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                 Cell nextCell = pickCandidateCell();
                 if (nextCell != null) {

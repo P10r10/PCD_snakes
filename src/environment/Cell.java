@@ -28,7 +28,7 @@ public class Cell {
         return position;
     }
 
-    public synchronized void request(Snake snake) throws InterruptedException { // consider locks?
+    public synchronized void request(Snake snake) throws InterruptedException {
         while (ocuppyingSnake != null || gameElement != null) { // cell is occupied
             if (gameElement instanceof Goal) { // when snake reaches goal, she captures
                 snake.addSize(getGoal().captureGoal());
@@ -38,7 +38,6 @@ public class Cell {
             wait();
         }
         ocuppyingSnake = snake;
-        notifyAll();
     }
 
     public synchronized void release() {
