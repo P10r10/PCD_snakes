@@ -18,8 +18,8 @@ import game.*;
  */
 public class LocalBoard extends Board {
 
-    private static final int NUM_SNAKES = 4;
-    private static final int NUM_OBSTACLES = 25;
+    private static final int NUM_SNAKES = 1;
+    private static final int NUM_OBSTACLES = 0;
     private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
     private final LinkedList<ObstacleMover> obstacleMovers = new LinkedList<>();
@@ -61,5 +61,10 @@ public class LocalBoard extends Board {
     @Override
     public void handleKeyRelease() {
         // do nothing... No keys relevant in local game
+    }
+
+    @Override
+    public int getLastKeyPressed() {
+        return -1; // do nothing... No keys relevant in local game
     }
 }

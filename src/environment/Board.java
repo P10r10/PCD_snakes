@@ -10,7 +10,6 @@ import game.*;
 public abstract class Board extends Observable {
     protected Cell[][] cells;
     private BoardPosition goalPosition;
-    private Goal goal;
     public static final long PLAYER_PLAY_INTERVAL = 100;
     public static final long REMOTE_REFRESH_INTERVAL = 200;
     public static final int NUM_COLUMNS = 30;
@@ -31,6 +30,7 @@ public abstract class Board extends Observable {
             }
         }
     }
+
     public void setFinished() {
         isFinished = true;
     }
@@ -40,7 +40,11 @@ public abstract class Board extends Observable {
     }
 
     public Cell getCell(BoardPosition cellCoord) {
-        return cells[cellCoord.x][cellCoord.y];
+        if (cellCoord.x < NUM_ROWS && cellCoord.y < NUM_COLUMNS
+                && cellCoord.x >= 0 && cellCoord.y >= 0) { //avoid out of index
+            return cells[cellCoord.x][cellCoord.y];
+        }
+        return null;
     }
 
     protected BoardPosition getRandomPosition() {
@@ -92,10 +96,6 @@ public abstract class Board extends Observable {
         addGameElement(new Goal(this));
     }
 
-    public Goal getGoal() { // remove?
-        return goal;
-    }
-
     protected void addObstacles(int numberObstacles) {
         getObstacles().clear(); // necessary when resetting obstacles
         while (numberObstacles > 0) {
@@ -139,6 +139,8 @@ public abstract class Board extends Observable {
     public abstract void handleKeyPress(int keyCode);
 
     public abstract void handleKeyRelease();
+
+    public abstract int getLastKeyPressed();
 
     public void addSnake(Snake snake) {
         snakes.add(snake);

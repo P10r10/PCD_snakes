@@ -10,6 +10,7 @@ import environment.Board;
 import environment.BoardPosition;
 import environment.Cell;
 import game.Goal;
+import game.HumanSnake;
 import game.Obstacle;
 import game.Snake;
 
@@ -21,10 +22,17 @@ import game.Snake;
  * @author luismota
  */
 public class RemoteBoard extends Board {
+    private int lastKeyPressed = 39;
+
+    @Override
+    public int getLastKeyPressed() {
+        return lastKeyPressed;
+    }
 
     @Override
     public void handleKeyPress(int keyCode) {
-        //TODO
+//        System.out.println("pressed " + keyCode);
+        lastKeyPressed = keyCode;
     }
 
     @Override
@@ -34,6 +42,8 @@ public class RemoteBoard extends Board {
 
     @Override
     public void init() {
+        HumanSnake hs = new HumanSnake(1313, this);
+        hs.start();
         // TODO
     }
 

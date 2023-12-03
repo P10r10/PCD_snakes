@@ -8,14 +8,16 @@ import javax.net.ssl.StandardConstants;
 
 import environment.LocalBoard;
 import game.Server;
+import remote.RemoteBoard;
 
 public class Main {
     public static void main(String[] args) {
-        LocalBoard board = new LocalBoard();
-        SnakeGui game = new SnakeGui(board, 600, 0);
+//        LocalBoard board = new LocalBoard();
+//        SnakeGui game = new SnakeGui(board, 600, 0); // reinstate
+        RemoteBoard remoteBoard = new RemoteBoard();
+        SnakeGui game = new SnakeGui(remoteBoard, 600, 0);
+
         game.init();
         // TODO Launch server
-        // Problems to address:
-        // -prevent deadlocks
     }
 }
