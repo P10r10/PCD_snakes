@@ -22,7 +22,7 @@ import game.Snake;
  * @author luismota
  */
 public class RemoteBoard extends Board {
-    private int lastKeyPressed = 39;
+    private int lastKeyPressed = 39; // defaults to moving right
 
     @Override
     public int getLastKeyPressed() {

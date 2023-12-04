@@ -28,34 +28,33 @@ public class HumanSnake extends Snake { // removed abstract
             try {
 //                Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                 Thread.sleep(250); // remove
-//                List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(cells.getFirst()); // head neighbours
                 BoardPosition headPos = cells.getFirst().getPosition();
-//                System.out.println(getBoard().getLastKeyPressed());
                 int keyPressed = getBoard().getLastKeyPressed();
                 Cell nextCell = null;
+                BoardPosition nextBP = null;
                 switch (keyPressed) {
                     case 37:
-                        nextCell = getBoard().getCell(headPos.getCellLeft());
+                        nextBP = headPos.getCellLeft();
                         break;
                     case 38:
-                        nextCell = getBoard().getCell(headPos.getCellAbove());
+                        nextBP = headPos.getCellAbove();
                         break;
                     case 39:
-                        nextCell = getBoard().getCell(headPos.getCellRight());
+                        nextBP = headPos.getCellRight();
                         break;
                     case 40:
-                        nextCell = getBoard().getCell(headPos.getCellBelow());
+                        nextBP = headPos.getCellBelow();
                         break;
+                }
+                if (getBoard().getCell(nextBP) != null && !getBoard().getCell(nextBP).isOccupied()) {
+                    nextCell = getBoard().getCell(nextBP);
                 }
                 if (nextCell != null) {
                     move(nextCell);
-                } else { // if null, movement is impossible
-                    break;
                 }
             } catch (InterruptedException e) {
                 System.out.println("DEB: interrupted run " + getName());
             }
         }
     }
-
 }

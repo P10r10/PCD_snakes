@@ -41,7 +41,7 @@ public abstract class Board extends Observable {
 
     public Cell getCell(BoardPosition cellCoord) {
         if (cellCoord.x < NUM_ROWS && cellCoord.y < NUM_COLUMNS
-                && cellCoord.x >= 0 && cellCoord.y >= 0) { //avoid out of index
+                && cellCoord.x >= 0 && cellCoord.y >= 0) { // to avoid out of bounds
             return cells[cellCoord.x][cellCoord.y];
         }
         return null;
@@ -59,7 +59,7 @@ public abstract class Board extends Observable {
         this.goalPosition = goalPosition;
     }
 
-    public synchronized void addGameElement(GameElement gameElement) { // synchronize?
+    public synchronized void addGameElement(GameElement gameElement) {
         boolean placed = false;
         while (!placed) {
             BoardPosition pos = getRandomPosition();
