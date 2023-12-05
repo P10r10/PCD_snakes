@@ -18,6 +18,6 @@ public class Main {
         SnakeGui game = new SnakeGui(remoteBoard, 600, 0);
 
         game.init();
-        // TODO Launch server
+        new Server().runServer();
     }
 }
