@@ -1,6 +1,7 @@
 package game;
 
 import environment.Board;
+import environment.BoardPosition;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -64,7 +65,16 @@ public class Server {
 
         private void processConnection() throws IOException { // remove Throws?
             System.out.println("SERVER: PROCESS CONNECTION");
-            out.writeObject(board);
+            while (true) {
+                try {
+                    Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
+                    System.out.println(board.getGoalPosition());
+                    out.reset(); // needed because of cache usage
+                    out.writeObject(board);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
 
 //            REMOVE COMMENTED CODE BELLOW

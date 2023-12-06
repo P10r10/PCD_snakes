@@ -11,9 +11,11 @@ import game.Server;
 import remote.RemoteBoard;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         LocalBoard board = new LocalBoard();
         SnakeGui game = new SnakeGui(board, 600, 0);
+        //wait here?
+//        Thread.sleep(10000); // waiting for human snakes to connect
         game.init();
         new Server(board).runServer();
     }
