@@ -32,7 +32,7 @@ public class RemoteBoard extends Board {
 
     @Override
     public void handleKeyPress(int keyCode) {
-//        System.out.println("pressed " + keyCode);
+        System.out.println("pressed " + keyCode);
         lastKeyPressed = keyCode;
     }
 

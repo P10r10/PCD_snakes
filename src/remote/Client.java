@@ -1,9 +1,13 @@
 package remote;
 
 import environment.Board;
+import environment.BoardPosition;
+import environment.Cell;
+import game.GameElement;
 import game.Test;
 import gui.SnakeGui;
 
+import javax.swing.text.Position;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
@@ -45,14 +49,18 @@ public class Client {
     }
 
     private void processConnection() throws IOException {
-        System.out.println("CLIENT: PROCESS CONNECTION");
         try {
             Board board = (Board) in.readObject();
-            remoteBoard.setGoalPosition(board.getGoalPosition());
+            BoardPosition gp = board.getGoalPosition();
+            Cell localGoalCell = board.getCell(gp);
+            Cell remoteGoalCell = remoteBoard.getCell(gp);
+
+            GameElement ge = localGoalCell.getGameElement();
+            remoteGoalCell.setGameElement(ge);
+            remoteBoard.setChanged();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
 //        try {
 //            Test test = (Test) in.readObject();
 //            System.out.println(test);
