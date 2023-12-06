@@ -1,7 +1,8 @@
 package game;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -30,7 +31,7 @@ public class Server {
 
     private class ConnectionHandler extends Thread {
         private final Socket connection;
-        private PrintWriter out;
+        private ObjectOutputStream out;
         private Scanner in;
 
         public ConnectionHandler(Socket connection) {
@@ -50,17 +51,20 @@ public class Server {
         }
 
         private void getStreams() throws IOException {
-            out = new PrintWriter(connection.getOutputStream(), true); // Output - write
+            out = new ObjectOutputStream(connection.getOutputStream()); // Output - write
             in = new Scanner(connection.getInputStream()); // Input - read
         }
 
-        private void processConnection() {
-            String msg;
-            do {
-                msg = in.nextLine(); // Waits ...
-                System.out.println("[Read] " + msg);
-                out.println("[Eco] " + msg);
-            } while (!"END".equals(msg));
+        private void processConnection() throws IOException { // remove Throws?
+            Test alex = new Test();
+            System.out.println("Sending ALEX");
+            out.writeObject(alex);
+//            String msg;
+//            do {
+//                msg = in.nextLine(); // Waits ...
+//                System.out.println("[Read] " + msg);
+//                out.println("[Eco] " + msg);
+//            } while (!"END".equals(msg));
         }
 
         private void closeConnection() {

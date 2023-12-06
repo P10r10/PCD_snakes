@@ -26,7 +26,7 @@ public class HumanSnake extends Snake { // removed abstract
                 break; // game over
             }
             try {
-//                Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
+//                Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
                 Thread.sleep(250); // remove
                 BoardPosition headPos = cells.getFirst().getPosition();
                 int keyPressed = getBoard().getLastKeyPressed();
@@ -53,7 +53,7 @@ public class HumanSnake extends Snake { // removed abstract
                     move(nextCell);
                 }
             } catch (InterruptedException e) {
-                System.out.println("DEB: interrupted run " + getName());
+                System.out.println("DEB: interrupted run @ HumanSnake " + getName()); // REMOVE
             }
         }
     }

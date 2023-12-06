@@ -42,8 +42,8 @@ public class RemoteBoard extends Board {
 
     @Override
     public void init() {
-        HumanSnake hs = new HumanSnake(1313, this);
-        hs.start();
+//        HumanSnake hs = new HumanSnake(1313, this);
+//        hs.start();
         // TODO
     }
 
@@ -51,5 +51,4 @@ public class RemoteBoard extends Board {
     public void stopSnakes() {
         // TODO
     }
-
 }
