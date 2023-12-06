@@ -1,5 +1,7 @@
 package game;
 
+import environment.Board;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -9,6 +11,11 @@ import java.util.Scanner;
 
 public class Server {
     private ServerSocket server;
+    private Board board;
+
+    public Server(Board board) {
+        this.board = board;
+    }
 
     public void runServer() {
         try {
@@ -56,9 +63,11 @@ public class Server {
         }
 
         private void processConnection() throws IOException { // remove Throws?
-            Test alex = new Test();
-            System.out.println("Sending ALEX");
-            out.writeObject(alex);
+            System.out.println("SERVER: PROCESS CONNECTION");
+            out.writeObject(board);
+
+
+//            REMOVE COMMENTED CODE BELLOW
 //            String msg;
 //            do {
 //                msg = in.nextLine(); // Waits ...

@@ -5,12 +5,14 @@ import game.Goal;
 import game.Obstacle;
 import game.Snake;
 
+import java.io.Serializable;
+
 /**
  * Main class for game representation.
  *
  * @author luismota
  */
-public class Cell {
+public class Cell implements Serializable { // REMOVE SERIALIZABLE?
     private BoardPosition position;
     private Snake ocuppyingSnake = null;
     private GameElement gameElement = null;

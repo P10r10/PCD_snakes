@@ -1,6 +1,9 @@
 package remote;
 
+import environment.Board;
 import game.Test;
+import gui.SnakeGui;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
@@ -15,6 +18,8 @@ public class Client {
 
     private InetAddress serverName;
     private int port;
+    RemoteBoard remoteBoard = new RemoteBoard();
+    SnakeGui remoteGame = new SnakeGui(remoteBoard, 600, 0);
 
     public Client(InetAddress byName, int port) {
         this.serverName = byName;
@@ -23,6 +28,7 @@ public class Client {
 
     public void runClient() {
         try {
+            remoteGame.init(); // Init remote game
             connection = new Socket(serverName, port); // Connect to server
             getStreams(); // Get i/o streams - required to communicate
             processConnection(); // Process connection
@@ -39,12 +45,23 @@ public class Client {
     }
 
     private void processConnection() throws IOException {
+        System.out.println("CLIENT: PROCESS CONNECTION");
         try {
-            Test test = (Test) in.readObject();
-            System.out.println(test);
+            Board board = (Board) in.readObject();
+            remoteBoard.setGoalPosition(board.getGoalPosition());
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+//        try {
+//            Test test = (Test) in.readObject();
+//            System.out.println(test);
+//        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+//        REMOVE COMMENTED CODE BELLOW
 //        String msg = "Hello ";
 //        for (int i = 0; i < 5; i++) {
 //            out.println(msg + i); // Write
@@ -74,9 +91,6 @@ public class Client {
     }
 
     public static void main(String[] args) throws UnknownHostException {
-//        RemoteBoard remoteBoard = new RemoteBoard();
-//        SnakeGui remoteGame = new SnakeGui(remoteBoard, 600, 0);
-//        remoteGame.init();
         new Client(InetAddress.getByName("localhost"), 1973).runClient();
     }
 }

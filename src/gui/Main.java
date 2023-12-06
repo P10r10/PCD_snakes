@@ -12,9 +12,9 @@ import remote.RemoteBoard;
 
 public class Main {
     public static void main(String[] args) {
-//        LocalBoard board = new LocalBoard();
-//        SnakeGui game = new SnakeGui(board, 600, 0); // reinstate
-//        game.init();
-        new Server().runServer();
+        LocalBoard board = new LocalBoard();
+        SnakeGui game = new SnakeGui(board, 600, 0);
+        game.init();
+        new Server(board).runServer();
     }
 }

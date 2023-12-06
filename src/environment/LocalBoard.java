@@ -1,6 +1,7 @@
 package environment;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +17,7 @@ import game.*;
  *
  * @author luismota
  */
-public class LocalBoard extends Board {
+public class LocalBoard extends Board implements Serializable { // REMOVE SERIALIZABLE?
 
     private static final int NUM_SNAKES = 0;
     private static final int NUM_OBSTACLES = 0;

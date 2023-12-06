@@ -13,6 +13,7 @@ import game.Goal;
 import game.HumanSnake;
 import game.Obstacle;
 import game.Snake;
+import gui.SnakeGui;
 
 /**
  * Remote representation of the game, no local threads involved.
@@ -45,6 +46,7 @@ public class RemoteBoard extends Board {
 //        HumanSnake hs = new HumanSnake(1313, this);
 //        hs.start();
         // TODO
+
     }
 
     @Override

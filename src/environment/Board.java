@@ -1,5 +1,6 @@
 package environment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Observable;
 
 import game.*;
 
-public abstract class Board extends Observable {
+public abstract class Board extends Observable implements Serializable { // REMOVE SERIALIZABLE?
     protected Cell[][] cells;
     private BoardPosition goalPosition;
     public static final long PLAYER_PLAY_INTERVAL = 100;
