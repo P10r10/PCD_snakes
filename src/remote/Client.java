@@ -47,28 +47,38 @@ public class Client {
     }
 
     private void processConnection() throws IOException {
-        Board board = null;
-
-        while (true) { // how to end? !interrupted?
+        Board board;
+        while (true) {
             try {
                 board = (Board) in.readObject();
-                if (board.isFinished()) {
-                    break;
-                }
-                BoardPosition gp = board.getGoalPosition();
-                System.out.println(gp);
-                Cell localGoalCell = board.getCell(gp);
-                Cell remoteGoalCell = remoteBoard.getCell(gp);
-
-                GameElement ge = localGoalCell.getGameElement();
-                remoteGoalCell.setGameElement(ge);
+                remoteBoard.setCells(board.getCells());
+                remoteBoard.setSnakes(board.getSnakes());
                 remoteBoard.setChanged();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
 
-//        REMOVE COMMENTED CODE BELLOW
+
+//        while (true) { // how to end? !interrupted?
+//            try {
+//                board = (Board) in.readObject();
+//                if (board.isFinished()) {
+//                    break;
+//                }
+//                BoardPosition gp = board.getGoalPosition();
+//                Cell localGoalCell = board.getCell(gp);
+//                Cell remoteGoalCell = remoteBoard.getCell(gp);
+//
+//                GameElement ge = localGoalCell.getGameElement();
+//                remoteGoalCell.setGameElement(ge);
+//                remoteBoard.setChanged();
+//            } catch (ClassNotFoundException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+
+//        REMOVE COMMENTED CODE BELLOW (TEACHER)
 //        String msg = "Hello ";
 //        for (int i = 0; i < 5; i++) {
 //            out.println(msg + i); // Write

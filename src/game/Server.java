@@ -68,7 +68,6 @@ public class Server {
             while (true) {
                 try {
                     Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
-                    System.out.println(board.getGoalPosition());
                     out.reset(); // needed because of cache usage
                     out.writeObject(board);
                 } catch (InterruptedException e) {

@@ -40,10 +40,9 @@ public abstract class Board extends Observable implements Serializable { // REMO
         return isFinished;
     }
 
-    public Cell getCell(BoardPosition cellCoord) {
-        if (cellCoord.x < NUM_ROWS && cellCoord.y < NUM_COLUMNS
-                && cellCoord.x >= 0 && cellCoord.y >= 0) { // to avoid out of bounds
-            return cells[cellCoord.x][cellCoord.y];
+    public Cell getCell(BoardPosition bp) { // next test avoids out of bounds
+        if (bp.x < NUM_ROWS && bp.y < NUM_COLUMNS && bp.x >= 0 && bp.y >= 0) {
+            return cells[bp.x][bp.y];
         }
         return null;
     }
@@ -107,8 +106,20 @@ public abstract class Board extends Observable implements Serializable { // REMO
         }
     }
 
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
+    }
+
     public LinkedList<Snake> getSnakes() {
         return snakes;
+    }
+
+    public void setSnakes(LinkedList<Snake> snakes) {
+        this.snakes = snakes;
     }
 
     @Override
