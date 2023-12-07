@@ -47,12 +47,18 @@ public class Client {
     }
 
     private void processConnection() throws IOException {
-        Board board;
+//        Board board;
         while (true) {
             try {
-                board = (Board) in.readObject();
-                remoteBoard.setCells(board.getCells());
-                remoteBoard.setSnakes(board.getSnakes());
+//                Board board = (Board) in.readObject();
+//                remoteBoard.setCells(board.getCells());
+//                remoteBoard.setSnakes(board.getSnakes());
+                Cell[][] cells = (Cell[][]) in.readObject();
+                if (cells == null) {
+                    break;
+                }
+                System.out.println("DEB: " + cells);
+                remoteBoard.setCells(cells);
                 remoteBoard.setChanged();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);

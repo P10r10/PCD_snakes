@@ -30,7 +30,7 @@ public class Server {
     }
 
     private void waitForConnection() throws IOException {
-        System.out.println("Waiting for a new connection...");
+        System.out.println("Server waiting for a new connection...");
         Socket connection = server.accept(); // Waits ...
         ConnectionHandler handler = new ConnectionHandler(connection);
         handler.start();
@@ -54,6 +54,7 @@ public class Server {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
+                System.out.println("HERE??"); // REMOVE
                 closeConnection(); // Close connection
             }
         }
@@ -64,12 +65,17 @@ public class Server {
         }
 
         private void processConnection() throws IOException { // remove Throws?
-            System.out.println("SERVER: PROCESS CONNECTION");
             while (true) {
                 try {
                     Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
                     out.reset(); // needed because of cache usage
-                    out.writeObject(board);
+                    if (!board.isFinished()) {
+                        out.writeObject(board.getCells());
+                    } else {
+                        out.writeObject(null);
+                        System.out.println("BREAKING!");
+                        break;
+                    }
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

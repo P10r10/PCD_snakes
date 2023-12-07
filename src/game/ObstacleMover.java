@@ -3,7 +3,9 @@ package game;
 import environment.Cell;
 import environment.LocalBoard;
 
-public class ObstacleMover extends Thread {
+import java.io.Serializable;
+
+public class ObstacleMover extends Thread implements Serializable {
     private Obstacle obstacle;
     private LocalBoard board;
 
