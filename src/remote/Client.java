@@ -4,6 +4,7 @@ import environment.Board;
 import environment.BoardPosition;
 import environment.Cell;
 import game.GameElement;
+import game.Snake;
 import gui.SnakeGui;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Client {
@@ -53,52 +55,15 @@ public class Client {
                 Object receivedObj = in.readObject();
                 if (receivedObj instanceof Cell[][] cells) {
                     remoteBoard.setCells(cells);
+                } else if (receivedObj instanceof LinkedList) {
+                    LinkedList<Snake> snakes = (LinkedList<Snake>) receivedObj;
+                    remoteBoard.setSnakes(snakes);
                 }
                 remoteBoard.setChanged();
-//                remoteBoard.setCells(remoteGame.getBoard().getCells());
-//                remoteGame.getBoard().setChanged();
             } catch (ClassNotFoundException e) {
-                System.out.println("HERE?");
                 throw new RuntimeException(e);
             }
         }
-
-//        Board board;
-//        while (true) {
-//            try {
-//                Board board = (Board) in.readObject();
-//                remoteBoard.setCells(board.getCells());
-//                remoteBoard.setSnakes(board.getSnakes());
-//                Cell[][] cells = (Cell[][]) in.readObject();
-//                if (cells == null) {
-//                    break;
-//                }
-//                System.out.println("DEB: " + cells);
-//                remoteBoard.setCells(cells);
-//                remoteBoard.setChanged();
-//            } catch (ClassNotFoundException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-
-
-//        while (true) { // how to end? !interrupted?
-//            try {
-//                board = (Board) in.readObject();
-//                if (board.isFinished()) {
-//                    break;
-//                }
-//                BoardPosition gp = board.getGoalPosition();
-//                Cell localGoalCell = board.getCell(gp);
-//                Cell remoteGoalCell = remoteBoard.getCell(gp);
-//
-//                GameElement ge = localGoalCell.getGameElement();
-//                remoteGoalCell.setGameElement(ge);
-//                remoteBoard.setChanged();
-//            } catch (ClassNotFoundException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
 
 //        REMOVE COMMENTED CODE BELLOW (TEACHER)
 //        String msg = "Hello ";

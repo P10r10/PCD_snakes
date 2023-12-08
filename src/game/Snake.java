@@ -27,10 +27,6 @@ public abstract class Snake extends Thread implements Serializable {
         this.board = board;
     }
 
-    public int getSize() { // REMOVE?
-        return size;
-    }
-
     public void addSize(int amount) {
         this.size += amount;
     }

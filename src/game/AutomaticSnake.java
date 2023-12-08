@@ -3,6 +3,7 @@ package game;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
 import environment.LocalBoard;
 import environment.Cell;
 import environment.Board;
@@ -48,7 +49,6 @@ public class AutomaticSnake extends Snake {
     @Override
     public void run() {
         doInitialPositioning();
-//        System.err.println("initial size: " + cells.size());
         try {
             Thread.sleep(10000); // makes every AutoSnake wait 10s
         } catch (InterruptedException e) {

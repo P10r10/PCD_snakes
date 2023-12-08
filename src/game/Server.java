@@ -22,7 +22,7 @@ public class Server {
     public void runServer() {
         try {
             server = new ServerSocket(1973, 1); // Create server socket
-            while (!board.isFinished()) { // Wait for new connection
+            while (true) { // Wait for new connection
                 waitForConnection();
             }
         } catch (IOException e) {
@@ -67,16 +67,17 @@ public class Server {
 
         private void processConnection() throws IOException { // remove Throws?
 
-            while (!board.isFinished()) {
+            while (true) {
                 try {
                     Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
                     out.reset(); // needed because of cache usage
                     out.writeObject(board.getCells());
+                    out.reset(); // needed because of cache usage
+                    out.writeObject(board.getSnakes());
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
-
 
 //            REMOVE COMMENTED CODE BELLOW
 //            String msg;

@@ -114,6 +114,10 @@ public abstract class Board extends Observable implements Serializable { // REMO
         this.cells = cells;
     }
 
+    public void setSnakes(LinkedList<Snake> snakes) {
+        this.snakes = snakes;
+    }
+
     public LinkedList<Snake> getSnakes() {
         return snakes;
     }
