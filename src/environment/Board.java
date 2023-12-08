@@ -12,7 +12,7 @@ public abstract class Board extends Observable implements Serializable { // REMO
     protected Cell[][] cells;
     private BoardPosition goalPosition;
     public static final long PLAYER_PLAY_INTERVAL = 100;
-    public static final long REMOTE_REFRESH_INTERVAL = 100;
+    public static final long REMOTE_REFRESH_INTERVAL = 200;
     public static final int NUM_COLUMNS = 30;
     public static final int NUM_ROWS = 30;
     protected LinkedList<Snake> snakes = new LinkedList<Snake>();
@@ -20,7 +20,7 @@ public abstract class Board extends Observable implements Serializable { // REMO
 
     private final LinkedList<Cell> cellsWithObstacles = new LinkedList<>();
 
-    protected boolean isFinished = false;
+    protected boolean finished = false;
 
 
     public Board() {
@@ -33,11 +33,11 @@ public abstract class Board extends Observable implements Serializable { // REMO
     }
 
     public void setFinished() {
-        isFinished = true;
+        finished = true;
     }
 
     public boolean isFinished() {
-        return isFinished;
+        return finished;
     }
 
     public Cell getCell(BoardPosition bp) { // next test avoids out of bounds
@@ -116,10 +116,6 @@ public abstract class Board extends Observable implements Serializable { // REMO
 
     public LinkedList<Snake> getSnakes() {
         return snakes;
-    }
-
-    public void setSnakes(LinkedList<Snake> snakes) {
-        this.snakes = snakes;
     }
 
     @Override

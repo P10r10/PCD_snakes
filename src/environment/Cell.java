@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author luismota
  */
-public class Cell implements Serializable { // REMOVE SERIALIZABLE?
+public class Cell implements Serializable {
     private BoardPosition position;
     private Snake ocuppyingSnake = null;
     private GameElement gameElement = null;

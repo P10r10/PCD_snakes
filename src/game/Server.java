@@ -2,6 +2,7 @@ package game;
 
 import environment.Board;
 import environment.BoardPosition;
+import gui.SnakeGui;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -21,7 +22,7 @@ public class Server {
     public void runServer() {
         try {
             server = new ServerSocket(1973, 1); // Create server socket
-            while (true) { // Wait for new connection
+            while (!board.isFinished()) { // Wait for new connection
                 waitForConnection();
             }
         } catch (IOException e) {
@@ -54,7 +55,7 @@ public class Server {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                System.out.println("HERE??"); // REMOVE
+                System.out.println("Closing connection"); // REMOVE
                 closeConnection(); // Close connection
             }
         }
@@ -65,17 +66,12 @@ public class Server {
         }
 
         private void processConnection() throws IOException { // remove Throws?
-            while (true) {
+
+            while (!board.isFinished()) {
                 try {
                     Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
                     out.reset(); // needed because of cache usage
-                    if (!board.isFinished()) {
-                        out.writeObject(board.getCells());
-                    } else {
-                        out.writeObject(null);
-                        System.out.println("BREAKING!");
-                        break;
-                    }
+                    out.writeObject(board.getCells());
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -99,6 +95,7 @@ public class Server {
                     in.close();
                 if (connection != null)
                     connection.close();
+//                System.exit(0); // REVIEW WITH SEVERAL HUMAN PLAYERS
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -50,8 +50,7 @@ public class AutomaticSnake extends Snake {
         doInitialPositioning();
 //        System.err.println("initial size: " + cells.size());
         try {
-            System.out.println("AutoSnake waiting 10s...");
-            Thread.sleep(10000);
+            Thread.sleep(10000); // makes every AutoSnake wait 10s
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

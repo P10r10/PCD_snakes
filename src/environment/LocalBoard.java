@@ -19,8 +19,8 @@ import game.*;
  */
 public class LocalBoard extends Board implements Serializable { // REMOVE SERIALIZABLE?
 
-    private static final int NUM_SNAKES = 1;
-    private static final int NUM_OBSTACLES = 0;
+    private static final int NUM_SNAKES = 4;
+    private static final int NUM_OBSTACLES = 15;
     private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
     private final LinkedList<ObstacleMover> obstacleMovers = new LinkedList<>();
@@ -37,12 +37,12 @@ public class LocalBoard extends Board implements Serializable { // REMOVE SERIAL
     }
 
     public void init() {
-        ExecutorService threadPool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
         for (Snake s : snakes) // start all snakes threads
             s.start();
         for (Obstacle obstacle : getObstacles()) { // create obstacle movers
             obstacleMovers.add(new ObstacleMover(obstacle, this));
         }
+        ExecutorService threadPool = Executors.newFixedThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
         for (ObstacleMover om : obstacleMovers) {
             threadPool.submit(om); // only 3 threads running at the same time
         }

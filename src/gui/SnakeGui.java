@@ -4,15 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import environment.Board;
 import environment.LocalBoard;
-import game.Obstacle;
 
 /**
  * Class to create and configure GUI.
@@ -20,12 +19,11 @@ import game.Obstacle;
  *
  * @author luismota
  */
-public class SnakeGui implements Observer {
+public class SnakeGui implements Observer, Serializable {
     public static final int BOARD_WIDTH = 800;
     public static final int BOARD_HEIGHT = 800;
-    public static final int NUM_COLUMNS = 40;
     public static final int NUM_ROWS = 30;
-    private JFrame frame;
+    private transient JFrame frame;
     private BoardComponent boardGui;
     private Board board;
 
@@ -35,6 +33,10 @@ public class SnakeGui implements Observer {
         frame = new JFrame("The Snake Game: " + (board instanceof LocalBoard ? "Local" : "Remote"));
         frame.setLocation(x, y);
         buildGui();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     private void buildGui() {

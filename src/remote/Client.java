@@ -47,23 +47,39 @@ public class Client {
     }
 
     private void processConnection() throws IOException {
-//        Board board;
+
         while (true) {
             try {
-//                Board board = (Board) in.readObject();
-//                remoteBoard.setCells(board.getCells());
-//                remoteBoard.setSnakes(board.getSnakes());
-                Cell[][] cells = (Cell[][]) in.readObject();
-                if (cells == null) {
-                    break;
+                Object receivedObj = in.readObject();
+                if (receivedObj instanceof Cell[][] cells) {
+                    remoteBoard.setCells(cells);
                 }
-                System.out.println("DEB: " + cells);
-                remoteBoard.setCells(cells);
                 remoteBoard.setChanged();
+//                remoteBoard.setCells(remoteGame.getBoard().getCells());
+//                remoteGame.getBoard().setChanged();
             } catch (ClassNotFoundException e) {
+                System.out.println("HERE?");
                 throw new RuntimeException(e);
             }
         }
+
+//        Board board;
+//        while (true) {
+//            try {
+//                Board board = (Board) in.readObject();
+//                remoteBoard.setCells(board.getCells());
+//                remoteBoard.setSnakes(board.getSnakes());
+//                Cell[][] cells = (Cell[][]) in.readObject();
+//                if (cells == null) {
+//                    break;
+//                }
+//                System.out.println("DEB: " + cells);
+//                remoteBoard.setCells(cells);
+//                remoteBoard.setChanged();
+//            } catch (ClassNotFoundException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
 
 
 //        while (true) { // how to end? !interrupted?
@@ -114,6 +130,8 @@ public class Client {
     }
 
     public static void main(String[] args) throws UnknownHostException {
+//        RemoteBoard remoteBoard = new RemoteBoard();
+//        SnakeGui remoteGame = new SnakeGui(remoteBoard, 600, 0);
         new Client(InetAddress.getByName("localhost"), 1973).runClient();
     }
 }
