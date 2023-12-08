@@ -26,8 +26,7 @@ public class HumanSnake extends Snake { // removed abstract
                 break; // game over
             }
             try {
-//                Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
-                Thread.sleep(250); // remove
+                Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
                 BoardPosition headPos = cells.getFirst().getPosition();
                 int keyPressed = getBoard().getLastKeyPressed();
                 Cell nextCell = null;

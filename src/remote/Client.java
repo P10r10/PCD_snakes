@@ -1,9 +1,8 @@
 package remote;
 
 import environment.Board;
-import environment.BoardPosition;
 import environment.Cell;
-import game.GameElement;
+import game.HumanSnake;
 import game.Snake;
 import gui.SnakeGui;
 
@@ -22,17 +21,16 @@ public class Client {
 
     private InetAddress serverName;
     private int port;
-    RemoteBoard remoteBoard = new RemoteBoard();
-    SnakeGui remoteGame = new SnakeGui(remoteBoard, 600, 0);
+    private Board remoteBoard;
 
-    public Client(InetAddress byName, int port) {
+    public Client(Board remoteBoard, InetAddress byName, int port) {
+        this.remoteBoard = remoteBoard;
         this.serverName = byName;
         this.port = port;
     }
 
     public void runClient() {
         try {
-            remoteGame.init(); // Init remote game
             connection = new Socket(serverName, port); // Connect to server
             getStreams(); // Get i/o streams - required to communicate
             processConnection(); // Process connection
@@ -57,6 +55,9 @@ public class Client {
                     remoteBoard.setCells(cells);
                 } else if (receivedObj instanceof LinkedList) {
                     LinkedList<Snake> snakes = (LinkedList<Snake>) receivedObj;
+                    Board board = snakes.getFirst().getBoard();
+                    System.out.println(board);
+                    remoteBoard.addSnake(new HumanSnake(1234, board));
                     remoteBoard.setSnakes(snakes);
                 }
                 remoteBoard.setChanged();
@@ -95,8 +96,10 @@ public class Client {
     }
 
     public static void main(String[] args) throws UnknownHostException {
-//        RemoteBoard remoteBoard = new RemoteBoard();
-//        SnakeGui remoteGame = new SnakeGui(remoteBoard, 600, 0);
-        new Client(InetAddress.getByName("localhost"), 1973).runClient();
+        RemoteBoard remoteBoard = new RemoteBoard();
+        SnakeGui remoteGame = new SnakeGui(remoteBoard, 600, 0);
+        remoteGame.init();
+        new Client(remoteBoard, InetAddress.getByName("localhost"), 1973).runClient();
+
     }
 }

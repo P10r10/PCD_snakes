@@ -19,7 +19,7 @@ import game.*;
  */
 public class LocalBoard extends Board implements Serializable { // REMOVE SERIALIZABLE?
 
-    private static final int NUM_SNAKES = 2;
+    private static final int NUM_SNAKES = 1;
     private static final int NUM_OBSTACLES = 0; // 15
     private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
