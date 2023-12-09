@@ -1,27 +1,28 @@
 package game;
 
 import environment.Board;
-import environment.BoardPosition;
+import environment.LocalBoard;
 import gui.SnakeGui;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
     private ServerSocket server;
     private Board board;
 
+    public static int hsCount = 0;
     public Server(Board board) {
         this.board = board;
     }
 
     public void runServer() {
         try {
-            server = new ServerSocket(1973, 1); // Create server socket
+            server = new ServerSocket(1973); // Create server socket
             while (true) { // Wait for new connection
                 waitForConnection();
             }
@@ -32,10 +33,10 @@ public class Server {
 
     private void waitForConnection() throws IOException {
         System.out.println("Server waiting for a new connection...");
-        Socket connection = server.accept(); // Waits ...
-        ConnectionHandler handler = new ConnectionHandler(connection);
+        Socket socket = server.accept(); // Waits ...
+        ConnectionHandler handler = new ConnectionHandler(socket);
         handler.start();
-        System.out.println("[new connection] " + connection.getInetAddress().getHostName());
+        System.out.println("[new connection] " + socket.getInetAddress().getHostName());
     }
 
     private class ConnectionHandler extends Thread {
@@ -65,29 +66,32 @@ public class Server {
             in = new Scanner(connection.getInputStream()); // Input - read
         }
 
-        private void processConnection() throws IOException { // remove Throws?
+        private void processConnection() {
 
             while (true) {
 //                try {
 //                    Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
-                    out.reset(); // needed because of cache usage
-                    out.writeObject(board.getCells());
-                    out.reset(); // needed because of cache usage
-                    out.writeObject(board.getSnakes());
-                    System.out.println(in.nextInt());
+//                    out.writeObject(board.getCells());
+//                    out.reset(); // needed because of cache usage //REMOVE?
+//                    out.writeObject(board.getSnakes());
+//                    out.reset(); // needed because of cache usage
+                int key = in.nextInt();
+                if (key == 99) { // 99 - code to create HumanSnake
+                    hsCount++;
+                    HumanSnake humanSnake = new HumanSnake(hsCount, board);
+                    board.addSnake(humanSnake);
+                    humanSnake.start();
+
+                } else if (key != board.getLastKeyPressed()) {
+                    board.setLastKeyPressed(key);
+                }
+//                    System.out.println(in.nextInt());
 //                } catch (InterruptedException e) {
 //                    throw new RuntimeException(e);
 //                }
             }
-
-//            REMOVE COMMENTED CODE BELLOW
-//            String msg;
-//            do {
-//                msg = in.nextLine(); // Waits ...
-//                System.out.println("[Read] " + msg);
-//                out.println("[Eco] " + msg);
-//            } while (!"END".equals(msg));
         }
+
 
         private void closeConnection() {
             try {
@@ -102,5 +106,12 @@ public class Server {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void main(String[] args) {
+        LocalBoard board = new LocalBoard();
+        SnakeGui gui = new SnakeGui(board, 600, 0);
+        gui.init();
+        new Server(board).runServer();
     }
 }

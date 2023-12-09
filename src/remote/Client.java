@@ -14,12 +14,13 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Client {
-    private Socket connection;
+    private Socket socket;
     private ObjectInputStream in;
     private PrintWriter out;
-
     private InetAddress serverName;
     private int port;
     private Board remoteBoard;
@@ -32,7 +33,8 @@ public class Client {
 
     public void runClient() {
         try {
-            connection = new Socket(serverName, port); // Connect to server
+            socket = new Socket(serverName, port); // Connect to server
+            System.out.println(socket); // remove
             getStreams(); // Get i/o streams - required to communicate
             processConnection(); // Process connection
         } catch (IOException e) {
@@ -43,46 +45,33 @@ public class Client {
     }
 
     private void getStreams() throws IOException {
-        in = new ObjectInputStream(connection.getInputStream()); // Input - read
-        out = new PrintWriter(connection.getOutputStream(), true); // Output - write
+        in = new ObjectInputStream(socket.getInputStream()); // Input - read
+        out = new PrintWriter(socket.getOutputStream(), true); // Output - write
     }
 
     private void processConnection() throws IOException {
-
-        while (true) {
-            try {
-                Object receivedObj = in.readObject();
-                if (receivedObj instanceof Cell[][] cells) {
-                    remoteBoard.setCells(cells);
-                } else if (receivedObj instanceof LinkedList) {
-                    LinkedList<Snake> snakes = (LinkedList<Snake>) receivedObj;
-//                    Board board = snakes.getFirst().getBoard();
-//                    System.out.println(board);
-//                    remoteBoard.addSnake(new HumanSnake(1234, board));
-                    remoteBoard.setSnakes(snakes);
-                }
-                System.out.println("D: " + remoteBoard.getLastKeyPressed());
-                out.println(remoteBoard.getLastKeyPressed());
-                remoteBoard.setChanged();
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-//        REMOVE COMMENTED CODE BELLOW (TEACHER)
-//        String msg = "Hello ";
-//        for (int i = 0; i < 5; i++) {
-//            out.println(msg + i); // Write
-//            System.out.println("[Write] " + msg + i);
-//            // Leitura do eco
-//            System.out.println(in.nextLine()); // Waits
-//            try {
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
+            out.println(99); // code to create HumanSnake on Server side
+            while (true) {
+//                try {
+//                    Object receivedObj = in.readObject();
+//                    if (receivedObj instanceof Cell[][] cells) {
+//                        remoteBoard.setCells(cells);
+//                    } else if (receivedObj instanceof LinkedList) {
+//                        LinkedList<Snake> snakes = (LinkedList<Snake>) receivedObj;
+//                        remoteBoard.setSnakes(snakes);
+//                    }
+//                    //                System.out.println("D: " + remoteBoard.getLastKeyPressed());
+//                    //                out.println(remoteBoard.getLastKeyPressed());
+//                    remoteBoard.setChanged();
+//                } catch (ClassNotFoundException | IOException e) {
+//                    System.out.println("X");
+//                    throw new RuntimeException(e);
+//                }
 //            }
-//        }
-//        out.println("END");
+        //TO SEND TEXT
+//            System.out.println("D: " + remoteBoard.getLastKeyPressed());
+            out.println(remoteBoard.getLastKeyPressed());
+        }
     }
 
     private void closeConnection() {
@@ -91,8 +80,8 @@ public class Client {
                 out.close();
             if (in != null)
                 in.close();
-            if (connection != null)
-                connection.close();
+            if (socket != null)
+                socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,9 +89,8 @@ public class Client {
 
     public static void main(String[] args) throws UnknownHostException {
         RemoteBoard remoteBoard = new RemoteBoard();
-        SnakeGui remoteGame = new SnakeGui(remoteBoard, 600, 0);
-        remoteGame.init();
+        SnakeGui gui = new SnakeGui(remoteBoard, 600, 0);
+        gui.init();
         new Client(remoteBoard, InetAddress.getByName("localhost"), 1973).runClient();
-
     }
 }

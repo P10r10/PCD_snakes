@@ -23,7 +23,7 @@ import gui.SnakeGui;
  * @author luismota
  */
 public class RemoteBoard extends Board {
-    private int lastKeyPressed = 39; // defaults to moving right
+
 //    private static int nbSnakes = 0;
 
 //    private HumanSnake humanSnake;
@@ -41,10 +41,14 @@ public class RemoteBoard extends Board {
     public int getLastKeyPressed() {
         return lastKeyPressed;
     }
+    @Override
+    public void setLastKeyPressed(int key) {
+        lastKeyPressed = key;
+    }
 
     @Override
     public void handleKeyPress(int keyCode) {
-        System.out.println("pressed " + keyCode);
+//        System.out.println("pressed " + keyCode);
         lastKeyPressed = keyCode;
     }
 
@@ -55,8 +59,8 @@ public class RemoteBoard extends Board {
 
     @Override
     public void init() {
-        System.out.println("init");
-        System.out.println(getSnakes().size());
+        System.out.println("init RemoteBoard");
+//        System.out.println(getSnakes().size());
 //        nbSnakes++;
 
 //        HumanSnake hs = new HumanSnake(1313, this);

@@ -4,8 +4,6 @@ import environment.Board;
 import environment.BoardPosition;
 import environment.Cell;
 
-import java.util.List;
-
 /**
  * Class for a remote snake, controlled by a human
  *
@@ -19,8 +17,13 @@ public class HumanSnake extends Snake { // removed abstract
 
     @Override
     public void run() {
-        System.out.println("Human snake " + getName() + " started.");
         doInitialPositioning();
+//        System.out.println("Human snake " + getName() + " started."); // REMOVE
+        try {
+            Thread.sleep(5000); // makes every HumanSnake wait 5s
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         while (!interrupted()) {
 //            if (getBoard().isFinished()) { // reinstate?
 //                break; // game over
@@ -29,6 +32,7 @@ public class HumanSnake extends Snake { // removed abstract
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
                 BoardPosition headPos = cells.getFirst().getPosition();
                 int keyPressed = getBoard().getLastKeyPressed();
+//                System.out.println("HS: " + keyPressed);
                 Cell nextCell = null;
                 BoardPosition nextBP = null;
                 switch (keyPressed) {

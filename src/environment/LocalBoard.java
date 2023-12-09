@@ -20,21 +20,17 @@ import remote.RemoteBoard;
  */
 public class LocalBoard extends Board implements Serializable { // REMOVE SERIALIZABLE?
 
-    private static final int NUM_SNAKES = 0;
+    private static final int NUM_SNAKES = 1;
     private static final int NUM_OBSTACLES = 0; // 15
     private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
     private final LinkedList<ObstacleMover> obstacleMovers = new LinkedList<>();
 
     public LocalBoard() {
-
-        for (int i = 0; i < NUM_SNAKES; i++) {
+        for (int i = 0; i < NUM_SNAKES; i++) { // add snakes
             AutomaticSnake snake = new AutomaticSnake(i, this);
             snakes.add(snake);
         }
-//        RemoteBoard remoteBoard = new RemoteBoard(); // rem
-//        snakes.add(new HumanSnake(1234, remoteBoard)); // rem
-//        remoteBoard.init(); // rem
         addObstacles(NUM_OBSTACLES);
         addGoal();
         System.err.println("All elements placed");
@@ -70,6 +66,11 @@ public class LocalBoard extends Board implements Serializable { // REMOVE SERIAL
 
     @Override
     public int getLastKeyPressed() {
-        return -1; // do nothing... No keys relevant in local game
+        return lastKeyPressed; // do nothing... No keys relevant in local game
+    }
+
+    @Override
+    public void setLastKeyPressed(int key) {
+        lastKeyPressed = key;
     }
 }
