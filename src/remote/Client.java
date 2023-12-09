@@ -8,6 +8,7 @@ import gui.SnakeGui;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -17,7 +18,7 @@ import java.util.Scanner;
 public class Client {
     private Socket connection;
     private ObjectInputStream in;
-    private Scanner out;
+    private PrintWriter out;
 
     private InetAddress serverName;
     private int port;
@@ -42,8 +43,8 @@ public class Client {
     }
 
     private void getStreams() throws IOException {
-        in = new ObjectInputStream(connection.getInputStream()); // Output - write
-//        in = new Scanner(connection.getInputStream()); // Input - read
+        in = new ObjectInputStream(connection.getInputStream()); // Input - read
+        out = new PrintWriter(connection.getOutputStream(), true); // Output - write
     }
 
     private void processConnection() throws IOException {
@@ -55,11 +56,13 @@ public class Client {
                     remoteBoard.setCells(cells);
                 } else if (receivedObj instanceof LinkedList) {
                     LinkedList<Snake> snakes = (LinkedList<Snake>) receivedObj;
-                    Board board = snakes.getFirst().getBoard();
-                    System.out.println(board);
-                    remoteBoard.addSnake(new HumanSnake(1234, board));
+//                    Board board = snakes.getFirst().getBoard();
+//                    System.out.println(board);
+//                    remoteBoard.addSnake(new HumanSnake(1234, board));
                     remoteBoard.setSnakes(snakes);
                 }
+                System.out.println("D: " + remoteBoard.getLastKeyPressed());
+                out.println(remoteBoard.getLastKeyPressed());
                 remoteBoard.setChanged();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);

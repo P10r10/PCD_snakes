@@ -41,7 +41,8 @@ public abstract class Board extends Observable implements Serializable { // REMO
     }
 
     public Cell getCell(BoardPosition bp) { // next test avoids out of bounds
-        if (bp.x < NUM_ROWS && bp.y < NUM_COLUMNS && bp.x >= 0 && bp.y >= 0) {
+        if (bp != null && bp.x < NUM_ROWS && bp.y < NUM_COLUMNS &&
+                bp.x >= 0 && bp.y >= 0) {
             return cells[bp.x][bp.y];
         }
         return null;

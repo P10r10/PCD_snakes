@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import game.*;
+import remote.RemoteBoard;
 
 /**
  * Class representing the state of a game running locally
@@ -19,7 +20,7 @@ import game.*;
  */
 public class LocalBoard extends Board implements Serializable { // REMOVE SERIALIZABLE?
 
-    private static final int NUM_SNAKES = 1;
+    private static final int NUM_SNAKES = 0;
     private static final int NUM_OBSTACLES = 0; // 15
     private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
@@ -31,6 +32,9 @@ public class LocalBoard extends Board implements Serializable { // REMOVE SERIAL
             AutomaticSnake snake = new AutomaticSnake(i, this);
             snakes.add(snake);
         }
+//        RemoteBoard remoteBoard = new RemoteBoard(); // rem
+//        snakes.add(new HumanSnake(1234, remoteBoard)); // rem
+//        remoteBoard.init(); // rem
         addObstacles(NUM_OBSTACLES);
         addGoal();
         System.err.println("All elements placed");

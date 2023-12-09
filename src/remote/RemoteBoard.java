@@ -24,12 +24,12 @@ import gui.SnakeGui;
  */
 public class RemoteBoard extends Board {
     private int lastKeyPressed = 39; // defaults to moving right
-    private static int nbSnakes = 0;
+//    private static int nbSnakes = 0;
 
 //    private HumanSnake humanSnake;
 
     public RemoteBoard() {
-        nbSnakes++;
+//        nbSnakes++;
 //        humanSnake = new HumanSnake(nbSnakes, this);
     }
 

@@ -68,15 +68,16 @@ public class Server {
         private void processConnection() throws IOException { // remove Throws?
 
             while (true) {
-                try {
-                    Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
+//                try {
+//                    Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
                     out.reset(); // needed because of cache usage
                     out.writeObject(board.getCells());
                     out.reset(); // needed because of cache usage
                     out.writeObject(board.getSnakes());
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                    System.out.println(in.nextInt());
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
             }
 
 //            REMOVE COMMENTED CODE BELLOW

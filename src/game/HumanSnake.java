@@ -22,9 +22,9 @@ public class HumanSnake extends Snake { // removed abstract
         System.out.println("Human snake " + getName() + " started.");
         doInitialPositioning();
         while (!interrupted()) {
-            if (getBoard().isFinished()) {
-                break; // game over
-            }
+//            if (getBoard().isFinished()) { // reinstate?
+//                break; // game over
+//            }
             try {
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
                 BoardPosition headPos = cells.getFirst().getPosition();
