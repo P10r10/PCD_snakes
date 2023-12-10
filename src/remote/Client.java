@@ -1,9 +1,6 @@
 package remote;
 
 import environment.Board;
-import environment.Cell;
-import game.HumanSnake;
-import game.Snake;
 import gui.SnakeGui;
 
 import java.io.IOException;
@@ -12,10 +9,6 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.LinkedList;
-import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Client {
     private Socket socket;
@@ -34,7 +27,6 @@ public class Client {
     public void runClient() {
         try {
             socket = new Socket(serverName, port); // Connect to server
-            System.out.println(socket); // remove
             getStreams(); // Get i/o streams - required to communicate
             processConnection(); // Process connection
         } catch (IOException e) {
@@ -49,7 +41,7 @@ public class Client {
         out = new PrintWriter(socket.getOutputStream(), true); // Output - write
     }
 
-    private void processConnection() throws IOException {
+    private void processConnection() {
             out.println(99); // code to create HumanSnake on Server side
             while (true) {
 //                try {
@@ -68,8 +60,6 @@ public class Client {
 //                    throw new RuntimeException(e);
 //                }
 //            }
-        //TO SEND TEXT
-//            System.out.println("D: " + remoteBoard.getLastKeyPressed());
             out.println(remoteBoard.getLastKeyPressed());
         }
     }

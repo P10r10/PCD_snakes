@@ -16,6 +16,7 @@ public class Server {
     private Board board;
 
     public static int hsCount = 0;
+
     public Server(Board board) {
         this.board = board;
     }
@@ -81,17 +82,37 @@ public class Server {
                     HumanSnake humanSnake = new HumanSnake(hsCount, board);
                     board.addSnake(humanSnake);
                     humanSnake.start();
-
                 } else if (key != board.getLastKeyPressed()) {
                     board.setLastKeyPressed(key);
                 }
-//                    System.out.println(in.nextInt());
 //                } catch (InterruptedException e) {
 //                    throw new RuntimeException(e);
 //                }
             }
         }
 
+        private synchronized void processConnection2() {
+            while (true) {
+                int key = in.nextInt();
+                if (key == 99) { // 99 - code to create HumanSnake
+                    hsCount++;
+                    HumanSnake humanSnake = new HumanSnake(hsCount, board);
+                    board.addSnake(humanSnake);
+                    humanSnake.start();
+                }
+                System.out.println("key: " + key + " LKP: " + board.getLastKeyPressed()); // REMOVE
+                while (key == board.getLastKeyPressed()) {
+//                    try {
+//                        wait();
+                        board.setLastKeyPressed(key);
+//                        notifyAll();
+                        System.out.println("HERE");
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+                }
+            }
+        }
 
         private void closeConnection() {
             try {

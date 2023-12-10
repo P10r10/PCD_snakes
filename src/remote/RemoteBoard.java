@@ -48,7 +48,7 @@ public class RemoteBoard extends Board {
 
     @Override
     public void handleKeyPress(int keyCode) {
-//        System.out.println("pressed " + keyCode);
+//        System.out.println("pressed " + keyCode); // remove
         lastKeyPressed = keyCode;
     }
 
@@ -60,12 +60,6 @@ public class RemoteBoard extends Board {
     @Override
     public void init() {
         System.out.println("init RemoteBoard");
-//        System.out.println(getSnakes().size());
-//        nbSnakes++;
-
-//        HumanSnake hs = new HumanSnake(1313, this);
-//        hs.start();
-//        getSnakes().getFirst().start();
         // TODO
 
     }
