@@ -1,6 +1,8 @@
 package remote;
 
 import environment.Board;
+import environment.Cell;
+import game.Snake;
 import gui.SnakeGui;
 
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.LinkedList;
 
 public class Client {
     private Socket socket;
@@ -41,26 +44,26 @@ public class Client {
         out = new PrintWriter(socket.getOutputStream(), true); // Output - write
     }
 
-    private void processConnection() {
-            out.println(99); // code to create HumanSnake on Server side
-            while (true) {
-//                try {
-//                    Object receivedObj = in.readObject();
-//                    if (receivedObj instanceof Cell[][] cells) {
-//                        remoteBoard.setCells(cells);
-//                    } else if (receivedObj instanceof LinkedList) {
-//                        LinkedList<Snake> snakes = (LinkedList<Snake>) receivedObj;
-//                        remoteBoard.setSnakes(snakes);
-//                    }
-//                    //                System.out.println("D: " + remoteBoard.getLastKeyPressed());
-//                    //                out.println(remoteBoard.getLastKeyPressed());
-//                    remoteBoard.setChanged();
-//                } catch (ClassNotFoundException | IOException e) {
-//                    System.out.println("X");
-//                    throw new RuntimeException(e);
-//                }
-//            }
+    private void processConnection2() { // TXT
+        out.println(99); // code to create HumanSnake on Server side
+        while (true) {
             out.println(remoteBoard.getLastKeyPressed());
+        }
+    }
+
+    private void processConnection() { // OBJ
+        out.println(99); // code to create HumanSnake on Server side
+        while (true) {
+            try {
+                out.println(remoteBoard.getLastKeyPressed());
+                Object receivedObj = in.readObject();
+                Board recB = (Board) receivedObj;
+                remoteBoard.setCells(recB.getCells());
+                remoteBoard.setSnakes(recB.getSnakes());
+                remoteBoard.setChanged();
+            } catch (ClassNotFoundException | IOException e) {
+//                e.printStackTrace(); // OptionalDataException bug
+            }
         }
     }
 

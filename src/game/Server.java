@@ -67,7 +67,36 @@ public class Server {
             in = new Scanner(connection.getInputStream()); // Input - read
         }
 
-        private void processConnection() {
+        private class txtComms extends Thread {
+            @Override
+            public void run() {
+                System.out.println("COMMS RUNNING!");
+                int key = in.nextInt();
+            }
+        }
+
+        private void processConnection() throws IOException { // OBJ
+            while (true) {
+                try {
+                    Thread.sleep(50); // seems to have less impact on OptionalDataException bug
+                } catch (InterruptedException e) {
+                }
+                out.writeObject(board);
+                out.reset(); // needed because of cache usage
+                //txt
+                int key = in.nextInt();
+                if (key == 99) { // 99 - code to create HumanSnake
+                    hsCount++;
+                    HumanSnake humanSnake = new HumanSnake(hsCount, board);
+                    board.addSnake(humanSnake);
+                    humanSnake.start();
+                } else if (key != board.getLastKeyPressed()) {
+                    board.setLastKeyPressed(key);
+                }
+            }
+        }
+
+        private void processConnection2() { // TXT
 
             while (true) {
 //                try {
@@ -88,29 +117,6 @@ public class Server {
 //                } catch (InterruptedException e) {
 //                    throw new RuntimeException(e);
 //                }
-            }
-        }
-
-        private synchronized void processConnection2() {
-            while (true) {
-                int key = in.nextInt();
-                if (key == 99) { // 99 - code to create HumanSnake
-                    hsCount++;
-                    HumanSnake humanSnake = new HumanSnake(hsCount, board);
-                    board.addSnake(humanSnake);
-                    humanSnake.start();
-                }
-                System.out.println("key: " + key + " LKP: " + board.getLastKeyPressed()); // REMOVE
-                while (key == board.getLastKeyPressed()) {
-//                    try {
-//                        wait();
-                        board.setLastKeyPressed(key);
-//                        notifyAll();
-                        System.out.println("HERE");
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-                }
             }
         }
 
