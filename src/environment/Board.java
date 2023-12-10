@@ -163,8 +163,6 @@ public abstract class Board extends Observable implements Serializable { // REMO
 
     public abstract int getLastKeyPressed();
 
-    public abstract void setLastKeyPressed(int key);
-
     public void addSnake(Snake snake) {
         snakes.add(snake);
     }

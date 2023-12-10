@@ -17,19 +17,12 @@ public class RemoteBoard extends Board {
     }
 
     @Override
-    public void setLastKeyPressed(int key) {
-        lastKeyPressed = key;
-    }
-
-    @Override
     public void handleKeyPress(int keyCode) {
-        System.out.println("pressed " + keyCode); // remove
         lastKeyPressed = keyCode;
     }
 
     @Override
     public void handleKeyRelease() {
-        // TODO
     }
 
     @Override
@@ -39,5 +32,6 @@ public class RemoteBoard extends Board {
 
     @Override
     public void stopSnakes() {
+        // not required
     }
 }

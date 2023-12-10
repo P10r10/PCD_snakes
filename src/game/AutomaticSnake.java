@@ -16,7 +16,7 @@ public class AutomaticSnake extends Snake {
 
     private boolean toReposition = false;
 
-    private Cell pickCandidateCell() { // review movement to solve deadlocks
+    private Cell pickCandidateCell() {
         Cell toReturn = null;
         List<BoardPosition> neighbourPos = getBoard().getNeighboringPositions(cells.getFirst()); // head neighbours
         List<Cell> candidateCells = new LinkedList<>();
@@ -50,7 +50,7 @@ public class AutomaticSnake extends Snake {
     public void run() {
         doInitialPositioning();
         try {
-            Thread.sleep(Board.DELAY); // makes every AutoSnake wait 10s
+            Thread.sleep(Board.DELAY); // makes every AutoSnake wait
             getBoard().setStarted();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

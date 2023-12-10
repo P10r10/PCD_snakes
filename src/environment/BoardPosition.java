@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author luismota
  */
 
-public class BoardPosition implements Serializable { // REMOVE SERIALIZABLE?
+public class BoardPosition implements Serializable {
     public final int x;
     public final int y;
 

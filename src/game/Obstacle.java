@@ -24,5 +24,4 @@ public class Obstacle extends GameElement implements Serializable {
     public void decreaseMoves() {
         remainingMoves--;
     }
-
 }

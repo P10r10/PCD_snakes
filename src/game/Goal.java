@@ -1,7 +1,6 @@
 package game;
 
 import environment.Board;
-import environment.LocalBoard;
 
 import java.io.Serializable;
 

@@ -9,10 +9,16 @@ import environment.Cell;
  *
  * @author luismota
  */
-public class HumanSnake extends Snake { // removed abstract
+public class HumanSnake extends Snake {
+
+    private int lastKeyPressed = 39;
 
     public HumanSnake(int id, Board board) {
         super(id, board);
+    }
+
+    public void setLastKeyPressed(int key) {
+        this.lastKeyPressed = key;
     }
 
     @Override
@@ -30,9 +36,9 @@ public class HumanSnake extends Snake { // removed abstract
                 break; // game over
             }
             try {
-                Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
+                Thread.sleep(Board.PLAYER_PLAY_INTERVAL);
                 BoardPosition headPos = cells.getFirst().getPosition();
-                int keyPressed = getBoard().getLastKeyPressed();
+                int keyPressed = lastKeyPressed;
                 Cell nextCell = null;
                 BoardPosition nextBP = switch (keyPressed) {
                     case 37 -> headPos.getCellLeft();

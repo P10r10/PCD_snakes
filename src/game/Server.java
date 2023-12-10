@@ -8,8 +8,6 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Server {
     private ServerSocket server;
@@ -53,8 +51,8 @@ public class Server {
         public void run() {
             try {
                 getStreams(); // Get i/o streams - required to communicate
-                receiveCommands(); //
-                sendGameState(); // Process connection
+                receiveCommands();
+                sendGameState();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -68,17 +66,19 @@ public class Server {
             in = new Scanner(connection.getInputStream()); // Input - read
         }
 
+        HumanSnake humanSnake;
+
         private void receiveCommands() {
             Thread thread = new Thread(() -> {
                 while (true) {
                     int key = in.nextInt();
                     if (key == 99) { // 99 - code to create HumanSnake
                         hsCount++;
-                        HumanSnake humanSnake = new HumanSnake(hsCount, board);
+                        humanSnake = new HumanSnake(hsCount, board);
                         board.addSnake(humanSnake);
                         humanSnake.start();
-                    } else if (key != board.getLastKeyPressed()) {
-                        board.setLastKeyPressed(key); //HERE
+                    } else {
+                        humanSnake.setLastKeyPressed(key);
                     }
                 }
             });
@@ -104,7 +104,6 @@ public class Server {
                     in.close();
                 if (connection != null)
                     connection.close();
-//                System.exit(0); // REVIEW WITH SEVERAL HUMAN PLAYERS
             } catch (IOException e) {
                 e.printStackTrace();
             }

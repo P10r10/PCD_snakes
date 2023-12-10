@@ -62,9 +62,4 @@ public class LocalBoard extends Board implements Serializable {
     public int getLastKeyPressed() {
         return lastKeyPressed; // do nothing... No keys relevant in local game
     }
-
-    @Override
-    public void setLastKeyPressed(int key) {
-        lastKeyPressed = key;
-    }
 }
