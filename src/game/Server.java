@@ -58,7 +58,7 @@ public class Server {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                System.out.println("Closing connection"); // REMOVE
+                System.out.println("Closing connection");
                 closeConnection(); // Close connection
             }
         }
@@ -78,7 +78,7 @@ public class Server {
                         board.addSnake(humanSnake);
                         humanSnake.start();
                     } else if (key != board.getLastKeyPressed()) {
-                        board.setLastKeyPressed(key);
+                        board.setLastKeyPressed(key); //HERE
                     }
                 }
             });
@@ -88,7 +88,7 @@ public class Server {
         private void sendGameState() throws IOException {
             while (true) {
                 try {
-                    Thread.sleep(50); // seems to have less impact on OptionalDataException bug
+                    Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
                 } catch (InterruptedException e) {
                 }
                 out.writeObject(board);

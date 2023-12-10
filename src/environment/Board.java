@@ -11,8 +11,9 @@ import game.*;
 public abstract class Board extends Observable implements Serializable { // REMOVE SERIALIZABLE?
     protected Cell[][] cells;
     private BoardPosition goalPosition;
-    public static final long PLAYER_PLAY_INTERVAL = 100;
-    public static final long REMOTE_REFRESH_INTERVAL = 200;
+    public static final long PLAYER_PLAY_INTERVAL = 200;
+    public static final long DELAY = 10000; // 10 seconds
+    public static final long REMOTE_REFRESH_INTERVAL = 50;  // seems to have less impact on OptionalDataException bug
     public static final int NUM_COLUMNS = 30;
     public static final int NUM_ROWS = 30;
     protected LinkedList<Snake> snakes = new LinkedList<Snake>();
@@ -20,6 +21,7 @@ public abstract class Board extends Observable implements Serializable { // REMO
     private final LinkedList<Cell> cellsWithObstacles = new LinkedList<>();
     protected int lastKeyPressed = 39; // defaults to moving right
     protected boolean finished = false;
+    protected boolean started = false;
 
     public Board() {
         cells = new Cell[NUM_COLUMNS][NUM_ROWS];
@@ -32,6 +34,14 @@ public abstract class Board extends Observable implements Serializable { // REMO
 
     public void setFinished() {
         finished = true;
+    }
+
+    public void setStarted() {
+        started = true;
+    }
+
+    public boolean isStarted() {
+        return started;
     }
 
     public boolean isFinished() {

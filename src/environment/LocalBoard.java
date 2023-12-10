@@ -1,24 +1,18 @@
 package environment;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import game.*;
-import remote.RemoteBoard;
 
 /**
  * Class representing the state of a game running locally
  *
  * @author luismota
  */
-public class LocalBoard extends Board implements Serializable { // REMOVE SERIALIZABLE?
+public class LocalBoard extends Board implements Serializable {
 
     private static final int NUM_SNAKES = 1;
     private static final int NUM_OBSTACLES = 15; // 15

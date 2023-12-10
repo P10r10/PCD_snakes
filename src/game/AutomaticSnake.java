@@ -50,7 +50,8 @@ public class AutomaticSnake extends Snake {
     public void run() {
         doInitialPositioning();
         try {
-            Thread.sleep(10000); // makes every AutoSnake wait 10s
+            Thread.sleep(Board.DELAY); // makes every AutoSnake wait 10s
+            getBoard().setStarted();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

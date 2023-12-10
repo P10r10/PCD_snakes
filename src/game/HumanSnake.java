@@ -18,11 +18,12 @@ public class HumanSnake extends Snake { // removed abstract
     @Override
     public void run() {
         doInitialPositioning();
-//        System.out.println("Human snake " + getName() + " started."); // REMOVE
-        try {
-            Thread.sleep(5000); // makes every HumanSnake wait 5s
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        while (!getBoard().isStarted()) {
+            try { // waits for the game to start before starting HumanSnake
+                sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
         while (!interrupted()) {
             if (getBoard().isFinished()) {
@@ -32,23 +33,14 @@ public class HumanSnake extends Snake { // removed abstract
                 Thread.sleep(Board.PLAYER_PLAY_INTERVAL); // reinstate
                 BoardPosition headPos = cells.getFirst().getPosition();
                 int keyPressed = getBoard().getLastKeyPressed();
-//                System.out.println("HS: " + keyPressed);
                 Cell nextCell = null;
-                BoardPosition nextBP = null;
-                switch (keyPressed) {
-                    case 37:
-                        nextBP = headPos.getCellLeft();
-                        break;
-                    case 38:
-                        nextBP = headPos.getCellAbove();
-                        break;
-                    case 39:
-                        nextBP = headPos.getCellRight();
-                        break;
-                    case 40:
-                        nextBP = headPos.getCellBelow();
-                        break;
-                }
+                BoardPosition nextBP = switch (keyPressed) {
+                    case 37 -> headPos.getCellLeft();
+                    case 38 -> headPos.getCellAbove();
+                    case 39 -> headPos.getCellRight();
+                    case 40 -> headPos.getCellBelow();
+                    default -> null;
+                };
                 if (getBoard().getCell(nextBP) != null && !getBoard().getCell(nextBP).isOccupied()) {
                     nextCell = getBoard().getCell(nextBP);
                 }
@@ -56,6 +48,7 @@ public class HumanSnake extends Snake { // removed abstract
                     move(nextCell);
                 }
             } catch (InterruptedException e) {
+                //do nothing
             }
         }
     }

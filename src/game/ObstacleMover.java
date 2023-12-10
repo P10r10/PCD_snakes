@@ -17,6 +17,13 @@ public class ObstacleMover extends Thread implements Serializable {
 
     @Override
     public void run() {
+        while (!board.isStarted()) {
+            try { // waits for the game to start before starting obstacles
+                sleep(250);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         while (obstacle.getRemainingMoves() > 0) {
             try {
                 Thread.sleep(Obstacle.OBSTACLE_MOVE_INTERVAL);

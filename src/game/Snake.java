@@ -3,8 +3,6 @@ package game;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import environment.LocalBoard;
-import gui.SnakeGui;
 import environment.Board;
 import environment.BoardPosition;
 import environment.Cell;
