@@ -53,7 +53,8 @@ public class Server {
         public void run() {
             try {
                 getStreams(); // Get i/o streams - required to communicate
-                processConnection(); // Process connection
+                receiveCommands(); //
+                sendGameState(); // Process connection
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -67,15 +68,24 @@ public class Server {
             in = new Scanner(connection.getInputStream()); // Input - read
         }
 
-        private class txtComms extends Thread {
-            @Override
-            public void run() {
-                System.out.println("COMMS RUNNING!");
-                int key = in.nextInt();
-            }
+        private void receiveCommands() {
+            Thread thread = new Thread(() -> {
+                while (true) {
+                    int key = in.nextInt();
+                    if (key == 99) { // 99 - code to create HumanSnake
+                        hsCount++;
+                        HumanSnake humanSnake = new HumanSnake(hsCount, board);
+                        board.addSnake(humanSnake);
+                        humanSnake.start();
+                    } else if (key != board.getLastKeyPressed()) {
+                        board.setLastKeyPressed(key);
+                    }
+                }
+            });
+            thread.start();
         }
 
-        private void processConnection() throws IOException { // OBJ
+        private void sendGameState() throws IOException {
             while (true) {
                 try {
                     Thread.sleep(50); // seems to have less impact on OptionalDataException bug
@@ -83,40 +93,6 @@ public class Server {
                 }
                 out.writeObject(board);
                 out.reset(); // needed because of cache usage
-                //txt
-                int key = in.nextInt();
-                if (key == 99) { // 99 - code to create HumanSnake
-                    hsCount++;
-                    HumanSnake humanSnake = new HumanSnake(hsCount, board);
-                    board.addSnake(humanSnake);
-                    humanSnake.start();
-                } else if (key != board.getLastKeyPressed()) {
-                    board.setLastKeyPressed(key);
-                }
-            }
-        }
-
-        private void processConnection2() { // TXT
-
-            while (true) {
-//                try {
-//                    Thread.sleep(Board.REMOTE_REFRESH_INTERVAL);
-//                    out.writeObject(board.getCells());
-//                    out.reset(); // needed because of cache usage //REMOVE?
-//                    out.writeObject(board.getSnakes());
-//                    out.reset(); // needed because of cache usage
-                int key = in.nextInt();
-                if (key == 99) { // 99 - code to create HumanSnake
-                    hsCount++;
-                    HumanSnake humanSnake = new HumanSnake(hsCount, board);
-                    board.addSnake(humanSnake);
-                    humanSnake.start();
-                } else if (key != board.getLastKeyPressed()) {
-                    board.setLastKeyPressed(key);
-                }
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
             }
         }
 

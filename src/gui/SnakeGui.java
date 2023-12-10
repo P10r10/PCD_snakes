@@ -20,8 +20,8 @@ import environment.LocalBoard;
  * @author luismota
  */
 public class SnakeGui implements Observer, Serializable {
-    public static final int BOARD_WIDTH = 800;
-    public static final int BOARD_HEIGHT = 800;
+    public static final int BOARD_WIDTH = 550;
+    public static final int BOARD_HEIGHT = 550;
     public static final int NUM_ROWS = 30;
     private transient JFrame frame;
     private BoardComponent boardGui;
